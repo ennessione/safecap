@@ -1,0 +1,355 @@
+<style>
+
+.element {
+    color: red;
+}
+
+.type {
+    color: blue;
+}
+
+.bold {
+    color: blue;
+    font-style: bold;
+}
+
+.emph {
+    font-style: italic;
+}
+
+.path {
+    color: orange;
+}
+
+.source {
+    background-color: #fefefe;
+    font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
+}
+
+.block {
+ 	background-color: #fefefe;
+}
+
+.comment {
+ 	 font-style: italic;
+	margin-top: 0.5em;
+	margin-bottom: 1em; 	 
+}
+
+.code {
+	margin-top: 0.5em;
+	margin-bottom: 1em;
+	padding: 5px;
+	width: auto;
+	max-height: 600px;
+	overflow: auto;
+	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
+	font-size: 13px;
+	background-color: #eeeeee;
+}
+
+.figure {
+	background-color: white;
+	margin-top: 0.5em;
+	margin-bottom: 1em;
+	padding: 5px;
+	overflow: auto;
+	-comment-border: 1px solid #888888;
+	-comment-border-radius: 10px;
+}
+
+
+.formula {
+	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
+	font-size: 12px;
+}
+
+.related {
+ 	
+}
+
+.list {
+ 	
+}
+
+
+.listitem {
+ 	
+}
+
+.section1 {
+	font-family: Arial,"Helvetica Neue",Helvetica,sans-serif; 
+	display: block;
+	padding: 10px;
+	-comment-width:800px;		
+}
+
+.section1flex {
+	font-family: Arial,"Helvetica Neue",Helvetica,sans-serif; 
+	display: flex;
+	padding: 10px;
+	overflow: visible;
+	flex-wrap: wrap;
+}
+
+.section2 {
+ 	font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
+	display: block;
+	padding: 10px;
+	overflow:hidden;
+	-comment-width:800px; 	
+}
+
+.section3 {
+ 	font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
+ 	display: block;
+	padding: 10px;
+	overflow:hidden;
+	-comment-width:800px;
+}
+
+.section4 {
+	padding: 10px;
+}
+
+.section5 {
+	padding: 10px;
+	border: 1px solid gray;	
+}
+
+.sectiontitle1 {
+	font-size: 150%;	
+}
+
+.sectiontitle2 {
+	font-size: 140%;
+}
+
+.sectiontitle3 {
+	font-size: 130%;
+}
+
+.sectiontitle4 {
+	font-size: 110%;
+}
+
+.sectiontitle5 {
+	font-size: 100%;
+	font-weight: bold; 	
+}
+
+.infomessage {
+    display: inline-block;
+    padding: 2px 5px;
+    border-radius: 5px 5px 5px 5px;
+    color: white;
+    font-size: 12px;
+}
+
+.ierror {
+    background-color: red;
+}
+
+.iwarning {
+    background-color: orange;
+}
+
+.inotice {
+    background-color: #4682B4;
+}
+
+.ipositive {
+    background-color: green;
+}
+
+.elementimage {
+background-color: white;
+margin-top: 0.5em;
+margin-bottom: 1em;
+padding: 5px;
+overflow: auto;
+background-color: #eff0f1;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);  
+}
+
+.imagediv1 {
+    height: 255px;
+    width: 100%;
+}
+.imagediv2
+{
+  max-height: 100%;
+  max-width: 100%;
+  overflow: auto;
+}
+
+pre {
+margin-top: 0.5em;
+margin-bottom: 1em;
+padding: 5px;
+width: auto;
+max-height: 600px;
+overflow: auto;
+font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
+font-size: 13px;
+background-color: #eff0f1;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.error-element {
+  background-color:#388093;
+  color: white;
+}
+
+
+.error-type {
+  background-color:red;
+  color: white;
+}
+
+[tooltip]:before {
+    content: attr(tooltip);
+    position: absolute;
+    opacity: 0;
+    transition: all 0.15s ease;
+    padding: 5px;
+    color: #333;
+    border-radius: 5px;
+    font-size: 10pt;
+    box-shadow: 2px 2px 1px silver; 
+}
+
+[tooltip]:hover:before {
+    /* needed - do not touch */
+    opacity: 1;
+    background: #deda14;
+    margin-top: -25px;
+    margin-left: 15px;    
+}
+</style>
+
+<script>
+
+[].forEach.call(document.querySelectorAll('div[contenteditable="true"]'), function (el) {
+    el.addEventListener('paste', function(e) {
+        e.preventDefault();
+        var text = e.clipboardData.getData("text/plain");
+        document.execCommand("insertHTML", false, text);
+    }, false);
+});
+
+
+var cellInputDelayTimer;
+
+
+function handleInputDelayed(id) {
+	clearTimeout(cellInputDelayTimer);
+    cellInputDelayTimer = setTimeout(function() {
+    	var edited = document.getElementById(id);
+    	var contents = edited.innerText;
+        edited.innerHTML = "<span class='error'>" + contents + "</span>";
+    }, 2000); 
+}
+
+function handleInput(id) {
+    var edited = document.getElementById(id);
+    var contents = edited.innerText;
+    rqCellChange(id);
+    // edited.innerHTML = "<span class='error'>" + contents + "</span>";
+}
+
+function resetStyle(id) {
+    var edited = document.getElementById(id);
+    edited.innerHTML = edited.innerText;
+}
+
+function formatParams(params) {
+  return "?" + Object
+        .keys(params)
+        .map(function(key){
+          return key+"="+encodeURIComponent(params[key])
+        })
+        .join("&")
+}
+
+function request(url, params, f) {
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", url + formatParams(params), true);
+	xhr.onload = function (e) {
+  		if (xhr.readyState === 4) {
+    		if (xhr.status === 200) {
+      			f(params, xhr);
+    		} else {
+     		 	console.error(xhr.statusText);
+    		}
+  		}
+	};
+	xhr.onerror = function (e) {
+		f(params, xhr);
+  		console.error(xhr.statusText);
+	};
+	xhr.send(null);
+}
+
+function tableName() {
+	var tableid = document.getElementById("table-id");
+    return tableid.value;
+}
+
+function domain() {
+	var tableid = document.getElementById("domain-id");
+    return tableid.value;
+}
+
+function reactToChange(p, req) {
+	var res = JSON.parse(req.responseText);
+	if (res.error == null) {
+		var edited = document.getElementById(p.column);
+		edited.innerHTML = res.body;
+	} else {
+		// alert(res.error);
+	}
+	
+}
+
+function rqCellChange(id) {
+	var edited = document.getElementById(id);
+    var contents = edited.innerText;
+	var params = {
+		command: "edit", 
+		table: tableName(),
+  		domain: domain(), 
+  		column: id,
+  		text: contents,
+  		index: edited.getAttribute("data-col-index")
+	};	
+	request("/editor", params, reactToChange);	
+}
+
+function rqStyleChange() {
+	var params = {
+		command: "style",
+		table: tableName(),
+  		domain: domain() 
+	};	
+	request("/editor", params, reactToChange);	
+}
+
+function rqUndo() {
+	var params = {
+  		command: "undo",
+	};	
+	request("/editor", params, function(p) {alert("undo");});	
+}
+
+
+function KeyPress(e) {
+      var evtobj = window.event? event : e;
+      if (evtobj.keyCode == 90 && evtobj.ctrlKey) {
+      		rqUndo();
+      }
+}
+
+document.onkeydown = KeyPress;
+
+</script>

@@ -1,0 +1,121 @@
+package uk.ac.ncl.safecap.textentry.parser;
+
+import java_cup.runtime.*;
+import java.util.*;
+
+parser code {:
+	private Scanner scanner;
+
+	public TEContext context = new TEContext();
+
+	public Parser(java_cup.runtime.Scanner s, 
+			ComplexSymbolFactory sf,
+			TEContext context) {
+			    super(s,sf);
+			    this.context = context;
+			}
+
+	
+	public static syntree parse(java.io.InputStream inputstream, TEContext context) throws Exception
+	{
+		ExtComplexSymbolFactory sf = new ExtComplexSymbolFactory();
+		Scanner scanner = new Scanner(inputstream, sf);
+		java_cup.runtime.Symbol s = new Parser(scanner, sf, context).parse();
+		if (s == null || !(s.value instanceof syntree))
+		    return null;
+		else {
+		    return (syntree) s.value;
+		}
+	}
+	
+
+	public void report_error(String message, Object info) {
+	    ErrInfo einfo = new ErrInfo(0, 0, message);
+	    context.addError(einfo);
+	    einfo.raw = info;
+
+    	if (info instanceof ComplexSymbolFactory.ComplexSymbol) {
+			ComplexSymbolFactory.ComplexSymbol s = ((ComplexSymbolFactory.ComplexSymbol) info);
+			einfo.symbol = s;
+			if (s != null && s.getRight() != null && s.getLeft() != null) {
+				ComplexSymbolFactory.Location loc_abs = s.getLeft();
+				ComplexSymbolFactory.Location loc_line = s.getRight();
+	       	    einfo.start = loc_abs.getLine();    
+	       	    einfo.end = loc_abs.getColumn();    
+	       	    einfo.line = loc_line.getLine();    
+	       	    einfo.column = loc_line.getColumn();    
+	        }
+	    }
+	} 
+
+  public void report_fatal_error(String message, Object info) {
+      report_error(message, info);
+  }
+:}
+
+terminal LPAR, RPAR, LCUR, RCUR, LSQB, RSQB, XTRUE, XFALSE, XERROR, COLON, SEMIC, COMMA, META, RQT;
+
+terminal Integer NUMBER;
+
+terminal Double REAL;
+
+terminal String ID, STRING;
+
+non terminal syntree record, record_body, name_based, record_list,
+			 record_part, array, value_list, value, meta, name,
+			 vmeta, record_part0
+			;
+
+start with record;
+
+
+record 		::= name:i name:n record_body:b				{: RESULT = new syntree(tesym.RECORD, i, n, b); :}
+			;
+
+record_body ::= array:a									{: RESULT = a; :}	
+			| name_based:x meta:m						{: RESULT = x.add(m); :}
+			;
+
+name_based	::= LCUR record_list:l RCUR 				{: RESULT = l; :}
+			| LCUR RCUR									{: RESULT = new syntree(tesym.ENTRIES); :}
+			;
+
+record_list	::= record_part:r							{: RESULT = new syntree(tesym.ENTRIES, r); :}
+			| record_list:rr record_part:r				{: RESULT = rr.add(r); :}
+			;
+
+record_part	::= record_part0:r vmeta:m					{: RESULT = r.add(m); :}
+			; 
+		
+record_part0::= name:n COLON value:v					{: RESULT = new syntree(tesym.ENTRY, n, v); :}
+			| record:r									{: RESULT = r; :}
+			;		
+			
+array		::= LSQB value_list:vv RSQB					{: RESULT = vv; :}
+			| LSQB RSQB									{: RESULT = new syntree(tesym.ARRAY); :}
+			;
+			
+value_list	::= value:v									{: RESULT = new syntree(tesym.ARRAY, v); :}
+			| value_list:vv COMMA value:v				{: RESULT = vv.add(v); :}
+			;
+			
+value 		::= NUMBER:n								{: RESULT = new syntree(tesym.INTEGER, new synvalue(n)); :}
+			| REAL:n 									{: RESULT = new syntree(tesym.REAL, new synvalue(n)); :}	
+			| XTRUE										{: RESULT = new syntree(tesym.TRUE); :}
+			| XFALSE 									{: RESULT = new syntree(tesym.FALSE); :}
+			| name:s 									{: RESULT = s; :}
+			| array:a 									{: RESULT = a; :}
+			| name_based:r 								{: RESULT = r; :}
+			;						 			
+
+vmeta		::= RQT LCUR record_list:l RCUR				{: RESULT = new syntree(tesym.META, l); :}
+			|											{: RESULT = new syntree(tesym.META); :}
+			;
+
+meta		::= META LCUR record_list:l RCUR			{: RESULT = new syntree(tesym.META, l); :}
+			|											{: RESULT = new syntree(tesym.META); :}
+			;
+
+name		::= ID:s									{: RESULT = new syntree(tesym.NAME, new synvalue(s)); :}
+			| STRING:s									{: RESULT = new syntree(tesym.NAME, new synvalue(s)); :}
+			;

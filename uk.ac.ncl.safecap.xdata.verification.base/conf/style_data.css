@@ -1,0 +1,401 @@
+<style>
+
+body {
+	font-family: Tahoma, Helvetica, sans-serif;
+}
+
+article, aside, figcaption, figure, footer, header, nav, section {
+	display: block;
+}
+
+h1, h2, h3, h4 {
+	margin: 1em 0 .5em;
+	line-height: 1.25; /
+	font-weight: bold;
+}
+
+h1 {
+	font-size: 2em;
+}
+
+h2 {
+	font-size: 1.5em;
+}
+
+h3 {
+	font-size: 1.2em;
+}
+
+h4 {
+	font-size: 1em;
+}
+
+ul, ol {
+	margin: 1em 0;
+	padding-left: 40px;
+}
+
+p {
+	margin: 1em 0;
+}
+
+a:link, a:visited, a {
+	color: #444488;
+	font-weight: normal;
+	text-decoration: none;
+	text-align: left;
+}
+
+a {
+	page-break-inside: avoid
+}
+
+.property {
+	margin-top: 50px;
+	font-family: Tahoma, Helvetica, sans-serif;
+	display: block;
+}
+
+.notice {
+	background-color: e0f5ff;
+}
+
+.warning {
+	background-color: fffbe0;
+}
+
+.error {
+	background-color: #ffe0e0;
+}
+
+.success {
+	background-color: d5fec8;
+}
+
+.unknown {
+	background-color: #e4e4e4;
+}
+
+.square {
+	height: 16px;
+	width: 16px;
+	border: 1px solid black;
+	display: inline;
+}
+
+.squarefill2 {
+	transition: height 3s;
+	height: 20%;
+	width: 100%;
+	background: blue;
+}
+
+.kind-true {
+	font-size: 14px;
+	font-weight: bold;
+	background-color: darkgreen;
+	display: inline-block;
+	color: white;
+	border-radius: 5px;
+	padding: 0px 2px 1px 2px;
+}
+
+.kind-false {
+	font-size: 14px;
+	font-weight: bold;
+	background-color: red;
+	display: inline-block;
+	color: white;
+	border-radius: 5px;
+	padding: 0px 2px 1px 2px;
+}
+
+.comment {
+	font-style: italic;
+	display: block;
+	word-wrap: break-word;
+	overflow: hidden;
+}
+
+.report {
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+	display: block;
+	padding: 10px;
+	overflow: hidden;
+	width: 800px;
+}
+
+.indexentry {
+	font-size: 14px;
+}
+
+.subindexentry {
+	font-size: 12px;
+	margin-left: 2em;
+}
+
+.relatedstart {
+	color: black;
+	font-weight: bold;
+	font-size: 12px;
+	display: block;
+}
+
+.predicate {
+	margin-top: 0.5em;
+	margin-bottom: 1em;
+	padding: 5px;
+	width: 800px;
+	max-height: 600px;
+	overflow: auto;
+	font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono,
+		DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace,
+		sans-serif;
+	font-size: 13px;
+	background-color: #eeeeee;
+}
+
+.element {
+	font-weight: normal;
+}
+
+.title {
+	color: black;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.subtitle {
+	color: black;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.reportname {
+	color: black;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.location:before {
+	color: black;
+	font-weight: bold;
+	font-size: 14px;
+	display: block;
+	content: "Location";
+}
+
+.location {
+	color: black;
+	font-weight: normal;
+	font-size: 14px;
+	padding: 0.5rem;
+	overflow-wrap: break-word;
+	display: block;
+}
+
+.description:before {
+	color: black;
+	font-weight: bold;
+	font-size: 14px;
+	display: block;
+	content: "Description";
+}
+
+.description {
+	color: black;
+	font-weight: normal;
+	font-size: 14px;
+	padding: 0.5rem;
+	overflow-wrap: break-word;
+	display: block;
+}
+
+.block {
+	color: black;
+	font-weight: normal;
+	font-size: 14px;
+	padding: 0.5rem;
+	overflow-wrap: break-word;
+	display: block;
+}
+
+.solution:before {
+	color: black;
+	font-weight: bold;
+	font-size: 14px;
+	display: block;
+	content: "Solution";
+}
+
+.solution {
+	color: black;
+	font-weight: normal;
+	font-size: 14px;
+	font-style: bold;
+	padding: 0.5rem;
+	overflow-wrap: break-word;
+	display: block;
+}
+
+.extrawitnessstart {
+	color: black;
+	font-weight: bold;
+	font-size: 14px;
+	display: block;
+}
+
+.extrawitness {
+	color: black;
+	font-weight: normal;
+	font-size: 14px;
+	overflow-wrap: break-word;
+	display: block;
+}
+
+.related {
+	color: black;
+	font-weight: normal;
+	font-size: 12px;
+	display: block;
+	text-decoration: none;
+}
+
+a.relatedlink:link {
+	color: darkblue;
+	text-decoration: none;
+}
+
+a.relatedlink:hover {
+	color: gray;
+	text-decoration: none;
+}
+
+.infomessage {
+	display: inline-block;
+	padding: 2px 5px;
+	border-radius: 5px 5px 5px 5px;
+	color: white;
+	font-size: 12px;
+}
+
+.ierror {
+	background-color: red;
+}
+
+.iwarning {
+	background-color: orange;
+}
+
+.inotice {
+	background-color: #4682B4;
+}
+
+.ipositive {
+	background-color: green;
+}
+
+.elementimage {
+	background-color: white;
+	margin-top: 0.5em;
+	margin-bottom: 1em;
+	padding: 5px;
+	overflow: auto;
+	zz-background-color: #eff0f1;
+	zz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+	resize: both;
+}
+
+.imagediv1 {
+	height: 255px;
+	width: 100%;
+}
+
+.imagediv2 {
+	max-height: 100%;
+	max-width: 100%;
+	overflow: auto;
+}
+
+pre {
+	margin-top: 0.5em;
+	margin-bottom: 1em;
+	padding: 5px;
+	width: auto;
+	max-height: 600px;
+	overflow: auto;
+	font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono,
+		DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace,
+		sans-serif;
+	font-size: 13px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+}
+
+.infobox {
+	border: 1px solid #333333;
+	font-size: 10px;
+}
+
+.infobox h2 {
+	background: #444444;
+	color: white;
+	padding: 5px;
+	font-size: 10px;
+}
+
+.infobox p {
+	color: black;
+	padding: 5px;
+	font-size: 10px;
+}
+
+.infobox {
+	overflow: scroll;
+	font-size: 10px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 240px;
+  background-color: #555;
+  color: #fff;
+  text-align: left;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltiptext {
+  font-size: 80%;
+}
+</style>

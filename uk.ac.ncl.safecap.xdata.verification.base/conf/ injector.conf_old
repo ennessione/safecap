@@ -1,0 +1,66 @@
+comment ,Table 1 starts,
+table,ASPECT RESTRICTION FOLLOWING RESTORATION,
+column,ASPECT RESTRICTION SEGMENT,MARSX
+path,/ControlTables/AxleCounterSectionList/SegmentList/Segment/Segment,
+subtable,ASPECT RESTRICTION FOLLOWING RESTORATION,
+column,APPLIED TO SIGNAL ROUTE,MARSX
+path,/ControlTables/AxleCounterSectionList/SegmentList/Segment/RouteList/Route,
+subtable,APPLIED EXCEPT WHEN,
+column,POINTS SET AND DETECTED,MARSX
+path,/ControlTables/AxleCounterSectionList/SegmentList/Segment/AppliedExceptWhen/Point,
+path,/ControlTables/AxleCounterSectionList/SegmentList/Segment/AppliedExceptWhen/Direction,
+column,EPR APPLIED,MARSX
+path,/ControlTables/AxleCounterSectionList/SegmentList/Segment/AppliedExceptWhen/EprApplied,
+column,STR APPLIED,MARSX
+path,/ControlTables/AxleCounterSectionList/SegmentList/Segment/AppliedExceptWhen/StrApplied,
+pop,,
+subtable,REMOVAL REQUIRES,
+column,TRACK SECTION OCCUPIED,MARSX
+path,/ControlTables/AxleCounterSectionList/SegmentList/Segment/RemovalRequires/SimpleTrackSectionOccupied,
+path,/ControlTables/AxleCounterSectionList/SegmentList/Segment/RemovalRequires/ConditionalTrackSectionOccupied,
+path,/ControlTables/AxleCounterSectionList/SegmentList/Segment/RemovalRequires/ComplexTrackSectionOccupied,
+path,/ControlTables/AxleCounterSectionList/SegmentList/Segment/RemovalRequires/FirstAdditionalTrackSectionOccupied,
+path,/ControlTables/AxleCounterSectionList/SegmentList/Segment/RemovalRequires/SecondAdditionalTrackSectionOccupied,
+column,AFTER ROUTE OPERATED,MARSX
+path,/ControlTables/AxleCounterSectionList/SegmentList/Segment/RemovalRequires/FirstRoutesOperatedList,
+path,/ControlTables/AxleCounterSectionList/SegmentList/Segment/RemovalRequires/FirstRoutesNormalList,
+path,/ControlTables/AxleCounterSectionList/SegmentList/Segment/RemovalRequires/SecondRoutesOperatedList,
+path,/ControlTables/AxleCounterSectionList/SegmentList/Segment/RemovalRequires/SecondRoutesNormalList,
+column,SIGNAL OFF $111,MARSX
+path,/ControlTables/AxleCounterSectionList/SegmentList/Segment/RemovalRequires/FirstSignalOff,
+path,/ControlTables/AxleCounterSectionList/SegmentList/Segment/RemovalRequires/SecondSignalOff,
+column,POINTS SET AND DETECTED,MARSX
+path,/ControlTables/AxleCounterSectionList/SegmentList/Segment/RemovalRequires/ConditionalPoint,
+path,/ControlTables/AxleCounterSectionList/SegmentList/Segment/RemovalRequires/ConditionalDirection,
+column,EPR APPLIED,MARSX
+,,
+comment ,Table 2 start,
+table,ROUTE SETTING,
+subtable,TRACK CIRCUITS,
+column,CLEAR,MARSX
+path,/ControlTables/RouteList/SettingTrackClearList/SettingTrackClear,
+column,OCC,MARSX
+path,/ControlTables/RouteList/SettingTrackOccupiedList/SettingTrackOccupied,
+pop,/ControlTables/RouteList/SettingTrackOccupiedList/SettingTrackOccupied,
+subtable,ROUTE RELEASES,
+column,NOT SET,MARSX
+column,SET,MARSX
+path,/ControlTables/RouteList/SettingRoutesReleasesSet,
+pop,,
+subtable,ROUTE LOCKING NORMALISED,
+column,SUB ROUTE,MARSX
+path,/ControlTables/RouteList/SettingRouteLockingNormalisedList/SettingRouteLockingNormalised/SubRoute/ConditionalFreeSubRoute,
+path,/ControlTables/RouteList/SettingRouteLockingNormalisedList/SettingRouteLockingNormalised/SubRoute/ConditionalOccupiedTrackList\ ConditionalOccupiedTrack,
+path,/ControlTables/RouteList/SettingRouteLockingNormalisedList/SettingRouteLockingNormalised/SubRoute/ConditionalOccupiedTime,
+path,/ControlTables/RouteList/SettingRouteLockingNormalisedList/SettingRouteLockingNormalised/SubRoute/FreeSubRouteList/FreeSubRoute,
+column,SUB OVERLAP,MARSX
+path,/ControlTables/RouteList/SettingRouteLockingNormalisedList/SettingRouteLockingNormalised/SubOverlapList/SubOverlap,
+column,AFTER ROUTE SET,MARSX
+path,/ControlTables/RouteList/SettingRouteLockingNormalisedList/SettingRouteLockingNormalised/AfterRouteSetList/AfterRouteSet,
+pop,,
+column,POINT AVAILABILITY,MARSX
+path,/ControlTables/RouteList/SettingPointAvailabilityList/SettingPointAvailability/Point,
+path,/ControlTables/RouteList/SettingPointAvailabilityList/SettingPointAvailability/ForwardRoutePoint,
+path,/ControlTables/RouteList/SettingPointAvailabilityList/SettingPointAvailability/ForwardRouteList/ForwardRoute,
+column,OVERLAP ORDER,MARSX
+path,/ControlTables/RouteList/OverlapList/Overlap/ SettingPointAvailabilityList/SettingPointAvailability,

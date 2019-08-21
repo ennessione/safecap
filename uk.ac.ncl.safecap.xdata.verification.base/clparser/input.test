@@ -1,0 +1,4 @@
+actor
+	var x : nat
+	x := 1
+end

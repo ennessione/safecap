@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            category="uk.ac.ncl.safecap.platform.category"
+            class="uk.ac.ncl.safecap.replay.ReplayView"
+            icon="icons/play.gif"
+            id="uk.ac.ncl.safecap.replay.ReplayView"
+            name="Simulation Replay View">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="uk.ac.ncl.safecap.platform.perspective">
+         <view
+               id="uk.ac.ncl.safecap.replay.ReplayView"
+               ratio="0.5"
+               relationship="bottom">
+         </view>
+      </perspectiveExtension>
+   </extension>
+
+</plugin>

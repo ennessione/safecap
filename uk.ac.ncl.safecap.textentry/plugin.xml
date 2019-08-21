@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="uk.ac.ncl.safecap.te.type" name="TE Type" schema="schema/uk.ac.ncl.safecap.te.type.exsd"/>
+   <extension-point id="uk.ac.ncl.safecap.te.action" name="TE Action" schema="schema/uk.ac.ncl.safecap.te.action.exsd"/>
+   <extension-point id="uk.ac.ncl.safecap.te.lib" name="TE library" schema="schema/uk.ac.ncl.safecap.te.lib.exsd"/>
+   <extension
+         point="uk.ac.ncl.safecap.te.lib">
+      <Library
+            folder="telib/">
+      </Library>
+   </extension>
+
+</plugin>

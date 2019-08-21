@@ -1,0 +1,161 @@
+<html><head>
+		<meta charset='utf-8'>
+		<meta http-equiv='x-ua-compatible' content='IE=edge'/>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script>
+<style media="screen" type="text/css">
+h1,h2,h3,h4,h5,h6{font-weight:400;color:#111;line-height:1em}code,kbd,pre,samp{color:#000;font-family:monospace,monospace;font-size:.98em}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}html{font-size:100%;overflow-y:scroll}body{color:#444;font-family:Georgia,Palatino,Palatino Linotype,Times,Times New Roman,serif;font-size:12px;line-height:1.5em;padding:1em;margin:auto;max-width:42em;background:#fefefe}a{color:#0645ad;text-decoration:none}a:visited{color:#0b0080}a:hover{color:#06e;outline:0}a:active{color:#faa700;outline:0}a:focus{outline:thin dotted}::-moz-selection{background:rgba(255,255,0,.3);color:#000}::selection{background:rgba(255,255,0,.3);color:#000}a::-moz-selection{background:rgba(255,255,0,.3);color:#0645ad}a::selection{background:rgba(255,255,0,.3);color:#0645ad}p{margin:1em 0}img{max-width:100%;border:0;vertical-align:middle}h1{font-size:2.5em}h2{font-size:2em}h3{font-size:1.5em}h4{font-weight:700;font-size:1.2em}h5{font-weight:700;font-size:1em}h6{font-weight:700;font-size:.9em}blockquote{color:#666;margin:0;padding-left:3em;border-left:.5em #eee solid}hr{display:block;height:2px;border:0;border-top:1px solid #aaa;border-bottom:1px solid #eee;margin:1em 0;padding:0}pre{white-space:pre;white-space:pre-wrap;word-wrap:break-word}b{font-weight:700}strong{font-weight:700}dfn{font-style:italic}ins{background:#ff9;color:#000;text-decoration:none}mark{background:#ff0;color:#000;font-style:italic;font-weight:700}sub{bottom:-.25em}sup{top:-.5em}ul{margin:1em 0;padding:0 0 0 2em}ol{margin:1em 0;padding:0 0 0 2em}dd{margin:0 0 0 2em}table{border-collapse:collapse;border-spacing:0}td{vertical-align:top}@media only screen and (min-width:480px){body{font-size:14px}}@media only screen and (min-width:768px){body{font-size:16px}}@media print{*{background:0 0!important;color:#000!important;-webkit-filter:none!important;filter:none!important}body{font-size:12pt;max-width:100%}a{text-decoration:underline}a:visited{text-decoration:underline}hr{height:1px;border:0;border-bottom:1px solid #000}pre{border:1px solid #999;padding-right:1em;page-break-inside:avoid}blockquote{border:1px solid #999;padding-right:1em;page-break-inside:avoid}tr{page-break-inside:avoid}img{page-break-inside:avoid;max-width:100%!important}p{orphans:3;widows:3}h2{orphans:3;widows:3;page-break-after:avoid}h3{orphans:3;widows:3;page-break-after:avoid}a[href]:after{content:"(" attr(href) ")"}abbr[title]:after{content:"(" attr(title) ")"}.ir a:after{content:""}a[href^="javascript:"]:after{content:""}a[href^="#"]:after{content:""}}li p:last-child{margin:0}
+</style>
+</head><body>
+<h1>Safecap Extractor</h1>
+<p>The extractor plug in to Safecap operates on raw control table data already structured
+into columns and tables. Its purpose is to deal with various syntactic patterns that
+may occur in source column cells.</p>
+<p>There are three main cases to consider. A <em>clean</em> case is a single value or a value
+list (comma  or whitespace separated); such data is simply transferred over to output data
+set.</p>
+<p>A <em>noisy</em> case is data interspersed with commentary or formatting syntax. For instance,
+in<br  /></p>
+<p><code>S123 YES</code></p>
+<p>there is a signal name and a word that is to be ignored. Dashed lines also appear
+as noisy data with an added issue of attributing data to correct containers.</p>
+<p>Finally, there is the case of a formula-like construct embedded in a cell. For instance,
+consider <code>T122 &amp; (T123 or T124 OCC 23sec)</code>. Here we have a piece of text that needs to be broken
+down into parts describing the top-level conjunction, the nested disjunction and a
+binary operator <code>OCC</code>. Also, 23sec may need to be simplified to a numeric literal 23.</p>
+<p>The extractor works in three stage. The first stage translates raw input text
+into a structured (that is, possibly nested) list of <em>tokens</em>. A token is a piece of text with attributes
+attached, such as the <em>token kind</em>. During this process, the tool makes assumptions
+what can constitute a token, the syntax used for grouping tokens and what must
+be treated as whitespaces.</p>
+<p>The following regular expression defines default token values</p>
+<p><code>[a-zA-Z\@_\-0-9\&lt;\&gt;\/\+\ $ \#\:\?\!\.\'\</code>~\&amp;*+\=^]+{Suffix}*</p>
+<p>where <code>Suffix = "(S)"|"(M)"|"(C)"|"(W)"|"(P)"|"(NP)"|"(SP)"</code>. By default, normal, curly and square brackets
+are treated as grouping brackets and are expected to be balanced. These define the
+nesting of tokens in a token list. Finally, everything else is treated as a whitespace.
+To give as example, string <code>T122, (T123 or T124 OCC 23sec)</code> is parsed into:</p>
+<pre><code>E[T122] E[&amp;] (E[T123] E[or] E[T124] E[OCC] E[23sec])
+</code></pre>
+<p>Syntax <code>E[abc]</code> stands for &ldquo;<em>token of kind E (Element) with literal contents abc</em>&ldquo;.
+Note that ( ) brackets from the source raw text became semantic brackets in the parsed
+token list.</p>
+<p>Initially, a parsed token list is made of tokens of kind E (Element). The tool does
+not know a priori the meaning of a token and assumes that every
+token is semantically significant.</p>
+<p>Notice that in the example there may be many different combinations
+of track names and ampersand and <code>or</code> operator and all of these need to be captured somehow. Writing
+a dedicated extraction rule for every possible combination is not feasible. At
+the same time, writing a conventional parser may not be possible given relative lack of formality and
+consistency. Therefore, the strategy is to consider various cases of token lists but
+also try and minimise their number.</p>
+<p>This is where the second stage starts. The purpose of the second stage is to reduce
+the number of distinct data patterns by giving hints which elements can be ignored
+(treated as <em>noise</em>), which elements are data (e.g., track name) and which
+ones are a fixed part of syntax (e.g., <code>or</code> and <code>OCC</code>).</p>
+<p>The sole form of user input to the extractor is in the form
+of <em>rewrite rules</em> - statements that define how a list of tokens can be transformed
+into something else. A rewrite rule uses a <em>pattern</em> to match the whole of a token list or any part
+of it. If there is a positive match than the matching part is replaced with the rule
+<em>target</em>. A target is simply another list of tokens that can be parametrised with values
+provided by pattern matching.<br  /></p>
+<p>As an example, we can say that <code>E[&amp;]</code> is not a semantically meaningful token. There
+are two ways to do this and they have slightly different effect. The first one is to simply delete
+any such token from every possible token list. The following rewrite rule does exactly this:</p>
+<pre><code>E[&amp;] -&gt; ()
+</code></pre>
+<p>Applied to the example above it produces</p>
+<pre><code>E[T122] (E[T123] E[or] E[T124] E[OCC] E[23sec])
+</code></pre>
+<p>Note that underlying data does not change and the tool is operating on views projecting
+actual data through token lists. If a rewrite rule is deleted, the effect of the
+rule is automatically undone.</p>
+<p>Deleting a token from all parsed token lists might be a step too far as it could render
+semantically distinct cases syntactically identical. Instead, one might do</p>
+<pre><code>E[&amp;] -&gt; N
+</code></pre>
+<p>to say that all occurrences of <em>&amp;</em> are to be treated as commentary. This rule produces</p>
+<pre><code>E[T122] N (E[T123] E[or] E[T124] E[OCC] E[23sec])
+</code></pre>
+<p>Note that N (Noise) elements lose token literal values and all noise tokens are identical.  Hence,
+if there were a slightly different case</p>
+<pre><code>E[T522] E[and] (E[T523] E[or] E[T524] E[OCC] E[12sec])
+</code></pre>
+<p>then rules</p>
+<ol>
+<li><code>E[&amp;] -&gt; N</code></li>
+<li><code>E[and] -&gt; N</code></li>
+</ol>
+<p>would reduce both cases to one <em>merged</em> case</p>
+<pre><code>E N (E E[or] E E[OCC] E)
+</code></pre>
+<p>Merging happens automatically when there are two token lists that are distinguished only by
+token literals (text inside square brackets) of Element kind tokens. Rewriting and merging reduces the number of cases one
+has to consider.</p>
+<p>It is useful to capture that <code>or</code> and <code>OCC</code> are operators and form a part of syntactic
+mark up rather than data itself. For this, we turn corresponding element tokens into operator
+tokens</p>
+<ol>
+<li><code>E[or] -&gt; O[or]</code></li>
+<li><code>E[OCC] -&gt; O[OCC]</code></li>
+</ol>
+<p>One may also add normalisation rules that hide syntactic discrepancies in operator
+syntax, e.g.,:</p>
+<ol>
+<li><code>E[occ] -&gt; O[OCC]</code></li>
+<li><code>E[occupied] -&gt; O[OCC]</code></li>
+</ol>
+<p>Applying these rules we obtain a new merged case</p>
+<pre><code>E N (E O[or] E O[OCC] E)
+</code></pre>
+<p>Unlike element tokens, operator tokens cannot be saved into output data set and an attempt
+to do so would result in an error. Also, during merge, operator literals are used to
+distinguish between cases.</p>
+<p>Rewrite rules may use regular expressions to match token literals (for E token kind) and also
+break down or merge token literals during rewrite process. For instance, the occupation time value <code>23sec</code>
+can be simplified by the following rule:</p>
+<pre><code>E:0["([0-9]+)sec"] -&gt; E[$0:1]
+</code></pre>
+<p>Applied to the example above, it produces <code>E[T522], (E[T523] or E[T524] E[OCC] E[12])</code>. Here,
+$0:1 is a <em>template</em> that refers to match group 1 of pattern matching element with index 0.
+One may also choose to keep the scaling unit, say seconds or minutes, in the output expression:</p>
+<pre><code>E:0["([0-9]+)(sec|min)"] -&gt; E[$0:1] O[$0:2]
+</code></pre>
+<p>It is possible to rewrite two or more source tokens into one target token. Consider example</p>
+<pre><code>E[UTM-] E[BA] E[UKM-] E[BA] E[UPL-] E[CD] 
+</code></pre>
+<p>These were supposed to be sub route names but in the source data each name is split
+into two parts. They can be all joined with one rule</p>
+<pre><code>E["(U.+)-"] E:1["[A-Z]{2}"]-&gt; E[$0:1$1:1]
+</code></pre>
+<p>that delivers token list</p>
+<pre><code>E[UTM-BA] E[UKM-BA] E[UPL-CD] 
+</code></pre>
+<p>The final extractor stage is called <em>reduction</em> and consists in applying rewrite rules that replace
+matched list parts with strictly smaller (typically empty) token lists. In other words, such rules delete, or reduce,
+chunk by chunk, all the matching token lists. In parallel with rewrite, these rules
+also accumulate matched data that goes into an in-memory database (to be saved into
+XML later).</p>
+<p>Reduction rewrite rules, like normal rewrite rules, can match whole or a
+part of a token list. Hence, even relatively complex cases can be handled with a collection
+of simple reduction rule. To give an example, the time occupation sub-expression <code>E
+O[OCC] E</code> can be reduced with rule<br  /></p>
+<pre><code>{TO:Track} O[OCC] {TO:Time} -&gt; ()
+</code></pre>
+<p>where <code>{TO:Track}</code> and <code>{TO:Time}</code> are data <em>bins</em> - named destinations accumulating data
+from every reduction case.</p>
+<p>Note that because of the containing disjunction such a rule could be wrong as it loses the
+context in which an instance of the occupation operator occurs.</p>
+<p>There is no explicit construct to express repetition and hence one cannot rewrite <code>E</code>, <code>E E</code>, <code>E E
+E</code> and so on into a single merged case. This aligns with the way rewrite
+systems works with the preference of implicit iteration based on step-wise application of rewrite rules
+over an explicit repetition.</p>
+<p>To reduce a homogenous token list of an arbitrary size one asks to match on the implicit start
+token <code>S</code> (the token appears automatically and marks the start of a list) and some next element:</p>
+<pre><code>S {bin-name} -&gt; ()
+</code></pre>
+<p>This rule reduces, by removing list head at one step, any list of element tokens and
+stores result in bin <code>bin-name</code>.</p>
+
+</body></html>

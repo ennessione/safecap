@@ -1,0 +1,87 @@
+package uk.ac.ncl.safecap.prover.tactic.parser;
+
+import java_cup.runtime.*;
+import java.util.*;
+
+parser code {:
+	private Scanner scanner;
+
+	public List<ErrInfo> errorInfo;
+
+	public Parser(	java_cup.runtime.Scanner s, 
+			ComplexSymbolFactory sf,
+			List<ErrInfo> errorInfo) {
+			    super(s,sf);
+			    this.errorInfo = errorInfo;
+			}
+
+
+	public static syntree parse(String file) throws Exception
+	{
+		ExtComplexSymbolFactory sf = new ExtComplexSymbolFactory();
+		Scanner scanner = new Scanner(new java.io.FileInputStream(file), sf);
+		return (syntree) new Parser(scanner, sf).parse().value;
+	}
+	
+	public static syntree parse(java.io.InputStream inputstream, List<ErrInfo> errorInfo) throws Exception
+	{
+		ExtComplexSymbolFactory sf = new ExtComplexSymbolFactory();
+		Scanner scanner = new Scanner(inputstream,sf);
+		java_cup.runtime.Symbol s = new Parser(scanner, sf, errorInfo).parse();
+		if (s == null)
+		    return null;
+		else
+		    return (syntree) s.value;
+	}
+	
+
+	public void report_error(String message, Object info) {
+	    ErrInfo einfo = new ErrInfo(0, 0, message);
+	    errorInfo.add(einfo);
+	    einfo.raw = info;
+
+    	    if (info instanceof ComplexSymbolFactory.ComplexSymbol) {
+		ComplexSymbolFactory.ComplexSymbol s = ((ComplexSymbolFactory.ComplexSymbol) info);
+		einfo.symbol = s;
+		if (s != null && s.getRight() != null && s.getLeft() != null) {
+			ComplexSymbolFactory.Location loc_abs = s.getLeft();
+			ComplexSymbolFactory.Location loc_line = s.getRight();
+	       	    	einfo.start = loc_abs.getLine();    
+	       	    	einfo.end = loc_abs.getColumn();    
+	       	    	einfo.line = loc_line.getLine();    
+	       	    	einfo.column = loc_line.getColumn();    
+	        }
+	    }
+	} 
+
+  public void report_fatal_error(String message, Object info) {
+      report_error(message, info);
+  }
+:}
+
+terminal LPAR, RPAR, LSQB, RSQB, LCUR, RCUR,
+		EXC, INC, LSS, TOP, BOT,
+		ERROR
+	;
+
+terminal String ID, STRING;
+
+non terminal String id;
+
+non terminal syntree order, seqorder
+	     ;
+
+order		::= TOP id:i								{: RESULT = new syntree(alphabet.TO_TOP, i); :}
+			| 	BOT id:i								{: RESULT = new syntree(alphabet.TO_BOT, i); :}
+			| 	EXC id:i								{: RESULT = new syntree(alphabet.TO_EXC, i); :}
+			| 	INC id:i								{: RESULT = new syntree(alphabet.TO_INC, i); :}
+			|   seqorder:s								{: RESULT = s; :}
+			;
+
+seqorder	::= id:a LSS id:b							{: RESULT = new syntree(alphabet.TO_LSS, new syntree(alphabet.ID, a), new syntree(alphabet.ID, b)); :}
+			| seqorder:s LSS id:b						{: RESULT = s.add(new syntree(alphabet.ID, b)); :}
+			;
+
+id			::= ID:i 									{: RESULT = i; :}
+			| STRING:n 									{: RESULT = n; :}
+			; 

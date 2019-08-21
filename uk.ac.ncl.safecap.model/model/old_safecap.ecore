@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="safecap" nsURI="uk.ac.ncl.safecap.emf" nsPrefix="uk.ac.ncl.safecap.emf">
+  <eClassifiers xsi:type="ecore:EClass" name="Labeled" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Project" eSuperTypes="#//Labeled #//schema/Schema #//model/Model #//trackside/Trackside #//commentary/Comments"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Visual" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="visible" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        transient="true" defaultValueLiteral="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="style" eType="#//Style"
+        transient="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Orientation">
+    <eLiterals name="Left"/>
+    <eLiterals name="Right" value="1"/>
+    <eLiterals name="Any" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Style">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="foreground" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="background" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="linewidth" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="linestyle" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Provenance" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="origin" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Extensible" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
+        eType="#//extension/ExtAttribute" containment="true"/>
+  </eClassifiers>
+  <eSubpackages name="schema" nsURI="uk.ac.ncl.safecap.emf.schema" nsPrefix="uk.ac.ncl.safecap.emf.schema">
+    <eClassifiers xsi:type="ecore:EClass" name="Schema">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
+          eType="#//schema/Node" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="segments" upperBound="-1"
+          eType="#//schema/Segment" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Segment" eSuperTypes="#//Labeled #//Visual #//Extensible">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="from" eType="#//schema/Node"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="to" eType="#//schema/Node"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="heightmap" eType="#//schema/HeightMap"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="role" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="pointrole" eType="#//schema/PointRole"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="length" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+          defaultValueLiteral="500"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="speed" upperBound="-1"
+          eType="#//schema/RouteSpeed" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="#//Labeled #//Visual #//Extensible">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="altitude" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="#//schema/NodeKind"
+          defaultValueLiteral="Normal"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="roles" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TerminalNode" eSuperTypes="#//schema/Node"/>
+    <eClassifiers xsi:type="ecore:EClass" name="HeightMap">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="points" upperBound="-1"
+          eType="#//schema/HeightPoint" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="HeightPoint">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="altitude" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="position" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="NodeKind">
+      <eLiterals name="Silent" value="-1"/>
+      <eLiterals name="Normal"/>
+      <eLiterals name="Boundary" value="1"/>
+      <eLiterals name="Terminal" value="2"/>
+      <eLiterals name="Crossover" value="3"/>
+      <eLiterals name="Point" value="4" literal="Point"/>
+      <eLiterals name="Invalid" value="101"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="NodeRole">
+      <eLiterals name="None"/>
+      <eLiterals name="LeftOverlap" value="1"/>
+      <eLiterals name="RightOverlap" value="2"/>
+      <eLiterals name="LeftPoint" value="4"/>
+      <eLiterals name="Source" value="8"/>
+      <eLiterals name="Sink" value="16"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="SegmentRole">
+      <eLiterals name="None"/>
+      <eLiterals name="Junction" value="1"/>
+      <eLiterals name="CrossA" value="2"/>
+      <eLiterals name="CrossB" value="4"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="PointRole">
+      <eLiterals name="None"/>
+      <eLiterals name="Normal" value="1"/>
+      <eLiterals name="Reverse" value="2"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="RouteSpeed">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="route" eType="#//model/Route"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="speed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="model" nsURI="uk.ac.ncl.safecap.emf.model" nsPrefix="uk.ac.ncl.safecap.emf.model">
+    <eClassifiers xsi:type="ecore:EClass" name="Model">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="lines" upperBound="-1"
+          eType="#//model/Line" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="routes" upperBound="-1"
+          eType="#//model/Route" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="ambits" upperBound="-1"
+          eType="#//model/Ambit" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="overlaps" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="false"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="autoroutes" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Line" eSuperTypes="#//Labeled #//Extensible #//Visual">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="routes" upperBound="-1"
+          eType="#//model/Route"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="color" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="orientation" eType="#//Orientation"
+          defaultValueLiteral="Left"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="trafficmix" upperBound="-1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Route" eSuperTypes="#//Labeled #//Extensible">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="ambits" lowerBound="1"
+          upperBound="-1" eType="#//model/Ambit"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="segments" lowerBound="1"
+          upperBound="-1" eType="#//schema/Segment"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="overlap" eType="#//model/Ambit"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="rule" upperBound="-1"
+          eType="#//model/Rule" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="aspects" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+          defaultValueLiteral="2"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="orientation" eType="#//Orientation"
+          defaultValueLiteral="Left"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="logic" upperBound="-1"
+          eType="#//model/ControlLogic" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Ambit" abstract="true" eSuperTypes="#//Labeled #//Extensible">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="segments" lowerBound="1"
+          upperBound="-1" eType="#//schema/Segment"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Section" eSuperTypes="#//model/Ambit"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Junction" eSuperTypes="#//model/Ambit">
+      <eOperations name="getEntries" lowerBound="1" upperBound="-1" eType="#//schema/Segment"/>
+      <eOperations name="getExits" lowerBound="1" upperBound="-1" eType="#//schema/Segment"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="points" upperBound="-1"
+          eType="#//model/Point" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Point">
+      <eOperations name="getNormalBranchNode" eType="#//schema/Node"/>
+      <eOperations name="getReverseBranchNode" eType="#//schema/Node"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="node" eType="#//schema/Node"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="rule" eType="#//model/Rule"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Rule">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="clear" upperBound="-1"
+          eType="#//model/Ambit"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="occupied" upperBound="-1"
+          eType="#//model/TimedOccupationRule" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="normal" upperBound="-1"
+          eType="#//model/Point"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="reverse" upperBound="-1"
+          eType="#//model/Point"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="routeState" upperBound="-1"
+          eType="#//model/RouteStateRule" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TimedOccupationRule">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="ambit" eType="#//model/Ambit"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="time" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="RouteStateRule">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="route" eType="#//model/Route"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="state" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ControlLogic">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="line" upperBound="-1"
+          eType="#//model/Line"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="overlap" eType="#//model/Ambit"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="aspects" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+          defaultValueLiteral="2"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="rule" upperBound="-1"
+          eType="#//model/ControlRule" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="normal" upperBound="-1"
+          eType="#//model/Point"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="reverse" upperBound="-1"
+          eType="#//model/Point"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ControlRule">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="clear" upperBound="-1"
+          eType="#//model/Ambit"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="occupied" upperBound="-1"
+          eType="#//model/TimedOccupationRule" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="routeState" upperBound="-1"
+          eType="#//model/RouteStateRule" containment="true"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="trackside" nsURI="uk.ac.ncl.safecap.emf.trackside" nsPrefix="uk.ac.ncl.safecap.emf.trackside">
+    <eClassifiers xsi:type="ecore:EClass" name="Trackside">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="equipment" upperBound="-1"
+          eType="#//trackside/Equipment" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="wires" upperBound="-1"
+          eType="#//trackside/Wire" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Equipment" abstract="true" eSuperTypes="#//Labeled #//Visual #//Provenance #//Extensible"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Signal" abstract="true" eSuperTypes="#//trackside/Equipment"/>
+    <eClassifiers xsi:type="ecore:EClass" name="SpeedLimit" abstract="true" eSuperTypes="#//trackside/Equipment">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="line" upperBound="-1"
+          eType="#//model/Line"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="limit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="LeftSignal" eSuperTypes="#//trackside/Signal #//trackside/LeftSide"/>
+    <eClassifiers xsi:type="ecore:EClass" name="RightSignal" eSuperTypes="#//trackside/Signal #//trackside/RightSide"/>
+    <eClassifiers xsi:type="ecore:EClass" name="LeftSpeedLimit" eSuperTypes="#//trackside/SpeedLimit #//trackside/LeftSide"/>
+    <eClassifiers xsi:type="ecore:EClass" name="RightSpeedLimit" eSuperTypes="#//trackside/SpeedLimit #//trackside/RightSide"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Wire" eSuperTypes="#//Extensible">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="from" eType="#//trackside/Equipment"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="to" eType="#//schema/Segment"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="offset" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="RedLeftSignal" eSuperTypes="#//trackside/Signal #//trackside/LeftSide"/>
+    <eClassifiers xsi:type="ecore:EClass" name="RedRightSignal" eSuperTypes="#//trackside/Signal #//trackside/RightSide"/>
+    <eClassifiers xsi:type="ecore:EClass" name="LeftSide" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="RightSide" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="StopAndGo" eSuperTypes="#//trackside/Equipment">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="line" upperBound="-1"
+          eType="#//model/Line"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="LeftStopAndGo" eSuperTypes="#//trackside/StopAndGo #//trackside/LeftSide"/>
+    <eClassifiers xsi:type="ecore:EClass" name="RightStopAndGo" eSuperTypes="#//trackside/StopAndGo #//trackside/RightSide"/>
+  </eSubpackages>
+  <eSubpackages name="commentary" nsURI="uk.ac.ncl.safecap.emf.commentary" nsPrefix="uk.ac.ncl.safecap.emf.commentary">
+    <eClassifiers xsi:type="ecore:EClass" name="Comments">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="comments" upperBound="-1"
+          eType="#//commentary/Commentary" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Commentary" abstract="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="OrientableCommentary" eSuperTypes="#//commentary/Commentary">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="angle" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Station" eSuperTypes="#//Labeled #//commentary/OrientableCommentary"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Bridge" eSuperTypes="#//commentary/OrientableCommentary"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Road" eSuperTypes="#//commentary/OrientableCommentary"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Tunnel" eSuperTypes="#//commentary/OrientableCommentary"/>
+  </eSubpackages>
+  <eSubpackages name="extension" nsURI="uk.ac.ncl.safecap.emf.extension" nsPrefix="uk.ac.ncl.safecap.emf.extension">
+    <eClassifiers xsi:type="ecore:EClass" name="ExtAttribute" abstract="true">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="domain" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ExtAttributeInt" abstract="true" eSuperTypes="#//extension/ExtAttribute">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ExtAttributeDbl" abstract="true" eSuperTypes="#//extension/ExtAttribute">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ExtAttributeStr" abstract="true" eSuperTypes="#//extension/ExtAttribute">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ExtAttributeB" abstract="true" eSuperTypes="#//extension/ExtAttribute">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CustomFigure" abstract="true">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="filled" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="foreground" eType="#//extension/CustomColour"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="background" eType="#//extension/CustomColour"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CustomLabel" eSuperTypes="#//extension/CustomFigure">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="fontsize" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Point">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CustomColour">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="red" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="green" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="blue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CustomShape" eSuperTypes="#//extension/CustomFigure">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="shape" upperBound="-1"
+          eType="#//extension/Point" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ExtVisual">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="figures" upperBound="-1"
+          eType="#//extension/CustomFigure" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ExtEquipment" eSuperTypes="#//trackside/Equipment">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="visual" eType="#//extension/ExtVisual"
+          containment="true"/>
+    </eClassifiers>
+  </eSubpackages>
+</ecore:EPackage>

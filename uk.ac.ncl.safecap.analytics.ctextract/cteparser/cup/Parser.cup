@@ -1,0 +1,98 @@
+package uk.ac.ncl.safecap.cteparser;
+
+import java_cup.runtime.*;
+import java.util.*;
+
+parser code {:
+	private Scanner scanner;
+
+	public TEContext context = new TEContext();
+
+	public Parser(java_cup.runtime.Scanner s, 
+			ComplexSymbolFactory sf,
+			TEContext context) {
+			    super(s,sf);
+			    this.context = context;
+			}
+
+	
+	public static syntree parse(java.io.InputStream inputstream, TEContext context) throws Exception
+	{
+		ExtComplexSymbolFactory sf = new ExtComplexSymbolFactory();
+		Scanner scanner = new Scanner(inputstream, sf);
+		java_cup.runtime.Symbol s = new Parser(scanner, sf, context).parse();
+		if (s == null || !(s.value instanceof syntree))
+		    return null;
+		else {
+		    return (syntree) s.value;
+		}
+	}
+	
+
+	public void report_error(String message, Object info) {
+	    ErrInfo einfo = new ErrInfo(0, 0, message);
+	    context.addError(einfo);
+	    einfo.raw = info;
+
+    	if (info instanceof ComplexSymbolFactory.ComplexSymbol) {
+			ComplexSymbolFactory.ComplexSymbol s = ((ComplexSymbolFactory.ComplexSymbol) info);
+			einfo.symbol = s;
+			if (s != null && s.getRight() != null && s.getLeft() != null) {
+				ComplexSymbolFactory.Location loc_abs = s.getLeft();
+				ComplexSymbolFactory.Location loc_line = s.getRight();
+	       	    einfo.start = loc_abs.getLine();    
+	       	    einfo.end = loc_abs.getColumn();    
+	       	    einfo.line = loc_line.getLine();    
+	       	    einfo.column = loc_line.getColumn();    
+	        }
+	    }
+	} 
+
+  public void report_fatal_error(String message, Object info) {
+      report_error(message, info);
+  }
+:}
+
+terminal LPAR, RPAR, LCUR, RCUR, LSQB, RSQB, XERROR, MAGIC1, MAGIC2;
+
+terminal String TOKEN;
+
+non terminal syntree part, list, token, rwr_part, rwr_list, top,
+					 pro_list, pro_part	
+			;
+
+top		  ::= MAGIC1 rwr_list:r				{: RESULT = r; :}
+			| MAGIC2 pro_list:r				{: RESULT = r; :}
+			| list:l						{: RESULT = l; :}
+			;
+
+rwr_list  ::= rwr_part:p					{: RESULT = new syntree(ctesym.LIST, p); :}
+			| rwr_list:l rwr_part:p			{: RESULT = l.add(p); :}
+			;  
+
+rwr_part  ::= token:k LSQB token:t RSQB		{: RESULT = t.add(k); :}
+			| LPAR rwr_list:l RPAR			{: RESULT = l; :}
+			| token:k						{: RESULT = k; :}
+			; 
+			
+pro_list  ::= pro_part:p					{: RESULT = new syntree(ctesym.LIST, p); :}
+			| pro_list:l pro_part:p			{: RESULT = l.add(p); :}
+			;  
+
+pro_part  ::= LCUR token:t RCUR				{: RESULT = new syntree(ctesym.BIN, t); :}
+			| LPAR pro_list:l RPAR			{: RESULT = l; :}
+			| token:k						{: RESULT = k; :}
+			; 			
+
+list	  ::= part:p						{: RESULT = new syntree(ctesym.LIST, p); :}
+			| list:l part:p					{: RESULT = l.add(p); :}	
+			;
+
+part 	  ::= LPAR list:p RPAR				{: RESULT = p; :}
+			| LCUR list:p RCUR				{: RESULT = p; :}
+			| LSQB list:p RSQB				{: RESULT = p; :}
+			| token:t						{: RESULT = t; :}
+			;
+			
+token	  ::= TOKEN:t						{: RESULT = new syntree(ctesym.TOKEN, new synvalue(t)); :}
+			;			

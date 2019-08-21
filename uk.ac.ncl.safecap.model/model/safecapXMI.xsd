@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:uk.ac.ncl.safecap.emf="uk.ac.ncl.safecap.emf" xmlns:uk.ac.ncl.safecap.emf.model="uk.ac.ncl.safecap.emf.model" xmlns:uk.ac.ncl.safecap.emf.schema="uk.ac.ncl.safecap.emf.schema" xmlns:uk.ac.ncl.safecap.emf.trackside="uk.ac.ncl.safecap.emf.trackside" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="uk.ac.ncl.safecap.emf">
+  <xsd:import namespace="uk.ac.ncl.safecap.emf.trackside" schemaLocation="safecap.tracksideXMI.xsd"/>
+  <xsd:import namespace="uk.ac.ncl.safecap.emf.model" schemaLocation="safecap.modelXMI.xsd"/>
+  <xsd:import namespace="uk.ac.ncl.safecap.emf.schema" schemaLocation="safecap.schemaXMI.xsd"/>
+  <xsd:import namespace="http://www.omg.org/XMI" schemaLocation="platform:/plugin/org.eclipse.emf.ecore/model/XMI.xsd"/>
+  <xsd:simpleType name="Orientation">
+    <xsd:restriction base="xsd:NCName">
+      <xsd:enumeration value="Left"/>
+      <xsd:enumeration value="Right"/>
+      <xsd:enumeration value="Any"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType abstract="true" name="Labeled">
+    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+      <xsd:element ref="xmi:Extension"/>
+    </xsd:choice>
+    <xsd:attribute ref="xmi:id"/>
+    <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
+    <xsd:attribute name="label" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:element name="Labeled" type="uk.ac.ncl.safecap.emf:Labeled"/>
+  <xsd:complexType name="Project">
+    <xsd:complexContent>
+      <xsd:extension base="uk.ac.ncl.safecap.emf:Labeled">
+        <xsd:choice maxOccurs="unbounded" minOccurs="0">
+          <xsd:element name="nodes" type="uk.ac.ncl.safecap.emf.schema:Node"/>
+          <xsd:element name="segments" type="uk.ac.ncl.safecap.emf.schema:Segment"/>
+          <xsd:element name="lines" type="uk.ac.ncl.safecap.emf.model:Line"/>
+          <xsd:element name="routes" type="uk.ac.ncl.safecap.emf.model:Route"/>
+          <xsd:element name="ambits" type="uk.ac.ncl.safecap.emf.model:Ambit"/>
+          <xsd:element name="equipment" type="uk.ac.ncl.safecap.emf.trackside:Equipment"/>
+          <xsd:element name="wires" type="uk.ac.ncl.safecap.emf.trackside:Wire"/>
+        </xsd:choice>
+        <xsd:attribute name="overlaps" type="xsd:boolean"/>
+        <xsd:attribute name="autoroutes" type="xsd:boolean"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Project" type="uk.ac.ncl.safecap.emf:Project"/>
+  <xsd:complexType abstract="true" name="Visual">
+    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+      <xsd:element ref="xmi:Extension"/>
+    </xsd:choice>
+    <xsd:attribute ref="xmi:id"/>
+    <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
+  </xsd:complexType>
+  <xsd:element name="Visual" type="uk.ac.ncl.safecap.emf:Visual"/>
+  <xsd:complexType name="Style">
+    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+      <xsd:element ref="xmi:Extension"/>
+    </xsd:choice>
+    <xsd:attribute ref="xmi:id"/>
+    <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
+    <xsd:attribute name="foreground" type="xsd:string"/>
+    <xsd:attribute name="background" type="xsd:string"/>
+    <xsd:attribute name="linewidth" type="xsd:int"/>
+    <xsd:attribute name="linestyle" type="xsd:int"/>
+  </xsd:complexType>
+  <xsd:element name="Style" type="uk.ac.ncl.safecap.emf:Style"/>
+  <xsd:complexType abstract="true" name="Provenance">
+    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+      <xsd:element ref="xmi:Extension"/>
+    </xsd:choice>
+    <xsd:attribute ref="xmi:id"/>
+    <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
+    <xsd:attribute name="origin" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:element name="Provenance" type="uk.ac.ncl.safecap.emf:Provenance"/>
+</xsd:schema>

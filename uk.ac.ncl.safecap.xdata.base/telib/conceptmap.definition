@@ -1,0 +1,11 @@
+schema conceptmap {
+	schema table {
+		schema column {
+			path: String ` {card: [1, -1]}
+			?reason: String ` {card: 1}
+			?pseudo: bool ` {card: 1}	
+			?semantics: String ` {card: 1}
+		}	
+	}
+	
+}

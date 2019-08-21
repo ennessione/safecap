@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:uk.ac.ncl.safecap.emf="uk.ac.ncl.safecap.emf" xmlns:uk.ac.ncl.safecap.emf.model="uk.ac.ncl.safecap.emf.model" xmlns:uk.ac.ncl.safecap.emf.schema="uk.ac.ncl.safecap.emf.schema" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="uk.ac.ncl.safecap.emf.schema">
+  <xsd:import namespace="uk.ac.ncl.safecap.emf.model" schemaLocation="safecap.modelXMI.xsd"/>
+  <xsd:import namespace="uk.ac.ncl.safecap.emf" schemaLocation="safecapXMI.xsd"/>
+  <xsd:import namespace="http://www.omg.org/XMI" schemaLocation="platform:/plugin/org.eclipse.emf.ecore/model/XMI.xsd"/>
+  <xsd:simpleType name="NodeKind">
+    <xsd:restriction base="xsd:NCName">
+      <xsd:enumeration value="Normal"/>
+      <xsd:enumeration value="Boundary"/>
+      <xsd:enumeration value="Terminal"/>
+      <xsd:enumeration value="Crossover"/>
+      <xsd:enumeration value="Point"/>
+      <xsd:enumeration value="Invalid"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="NodeRole">
+    <xsd:restriction base="xsd:NCName">
+      <xsd:enumeration value="None"/>
+      <xsd:enumeration value="LeftOverlap"/>
+      <xsd:enumeration value="RightOverlap"/>
+      <xsd:enumeration value="LeftPoint"/>
+      <xsd:enumeration value="Source"/>
+      <xsd:enumeration value="Sink"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="SegmentRole">
+    <xsd:restriction base="xsd:NCName">
+      <xsd:enumeration value="None"/>
+      <xsd:enumeration value="Junction"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="PointRole">
+    <xsd:restriction base="xsd:NCName">
+      <xsd:enumeration value="None"/>
+      <xsd:enumeration value="Normal"/>
+      <xsd:enumeration value="Reverse"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="Schema">
+    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+      <xsd:element name="nodes" type="uk.ac.ncl.safecap.emf.schema:Node"/>
+      <xsd:element name="segments" type="uk.ac.ncl.safecap.emf.schema:Segment"/>
+      <xsd:element ref="xmi:Extension"/>
+    </xsd:choice>
+    <xsd:attribute ref="xmi:id"/>
+    <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
+  </xsd:complexType>
+  <xsd:element name="Schema" type="uk.ac.ncl.safecap.emf.schema:Schema"/>
+  <xsd:complexType name="Segment">
+    <xsd:complexContent>
+      <xsd:extension base="uk.ac.ncl.safecap.emf:Labeled">
+        <xsd:choice maxOccurs="unbounded" minOccurs="0">
+          <xsd:element name="from" type="uk.ac.ncl.safecap.emf.schema:Node"/>
+          <xsd:element name="to" type="uk.ac.ncl.safecap.emf.schema:Node"/>
+          <xsd:element name="heightmap" type="uk.ac.ncl.safecap.emf.schema:HeightMap"/>
+          <xsd:element name="speed" type="uk.ac.ncl.safecap.emf.schema:RouteSpeed"/>
+        </xsd:choice>
+        <xsd:attribute name="role" type="xsd:int"/>
+        <xsd:attribute name="pointrole" type="uk.ac.ncl.safecap.emf.schema:PointRole"/>
+        <xsd:attribute name="length" type="xsd:int"/>
+        <xsd:attribute name="from" type="xsd:string"/>
+        <xsd:attribute name="to" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Segment" type="uk.ac.ncl.safecap.emf.schema:Segment"/>
+  <xsd:complexType name="Node">
+    <xsd:complexContent>
+      <xsd:extension base="uk.ac.ncl.safecap.emf:Labeled">
+        <xsd:attribute name="altitude" type="xsd:int"/>
+        <xsd:attribute name="kind" type="uk.ac.ncl.safecap.emf.schema:NodeKind"/>
+        <xsd:attribute name="roles" type="xsd:int"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Node" type="uk.ac.ncl.safecap.emf.schema:Node"/>
+  <xsd:complexType name="TerminalNode">
+    <xsd:complexContent>
+      <xsd:extension base="uk.ac.ncl.safecap.emf.schema:Node"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TerminalNode" type="uk.ac.ncl.safecap.emf.schema:TerminalNode"/>
+  <xsd:complexType name="HeightMap">
+    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+      <xsd:element name="points" type="uk.ac.ncl.safecap.emf.schema:HeightPoint"/>
+      <xsd:element ref="xmi:Extension"/>
+    </xsd:choice>
+    <xsd:attribute ref="xmi:id"/>
+    <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
+  </xsd:complexType>
+  <xsd:element name="HeightMap" type="uk.ac.ncl.safecap.emf.schema:HeightMap"/>
+  <xsd:complexType name="HeightPoint">
+    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+      <xsd:element ref="xmi:Extension"/>
+    </xsd:choice>
+    <xsd:attribute ref="xmi:id"/>
+    <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
+    <xsd:attribute name="altitude" type="xsd:int"/>
+    <xsd:attribute name="position" type="xsd:int"/>
+  </xsd:complexType>
+  <xsd:element name="HeightPoint" type="uk.ac.ncl.safecap.emf.schema:HeightPoint"/>
+  <xsd:complexType name="RouteSpeed">
+    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+      <xsd:element name="route" type="uk.ac.ncl.safecap.emf.model:Route"/>
+      <xsd:element ref="xmi:Extension"/>
+    </xsd:choice>
+    <xsd:attribute ref="xmi:id"/>
+    <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
+    <xsd:attribute name="speed" type="xsd:int"/>
+    <xsd:attribute name="route" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:element name="RouteSpeed" type="uk.ac.ncl.safecap.emf.schema:RouteSpeed"/>
+</xsd:schema>

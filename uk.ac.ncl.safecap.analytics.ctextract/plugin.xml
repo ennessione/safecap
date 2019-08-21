@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="uk.ac.ncl.safecap.analytics.ctextract.ui.ExtractionEditor"
+            contributorClass="uk.ac.ncl.safecap.analytics.ctextract.ui.ExtractorEditorContributor"
+            default="false"
+            extensions="extractor"
+            icon="icons/pliers.png"
+            id="uk.ac.ncl.safecap.analytics.ctextract.editor"
+            name="Extraction rule editor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="uk.ac.ncl.safecap.platform.newWizards"
+            class="uk.ac.ncl.safecap.analytics.ctextract.ui.wizard.CTENewWizard"
+            finalPerspective="uk.ac.ncl.safecap.platform.perspective"
+            icon="icons/pliers.png"
+            id="uk.ac.ncl.safecap.analytics.ctextract.wizard2"
+            name="Extractor">
+      </wizard>
+   </extension>
+
+</plugin>

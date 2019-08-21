@@ -1,0 +1,140 @@
+package uk.ac.ncl.safecap.lldl;
+
+import java_cup.runtime.*;
+import java.util.*;
+import java.math.BigInteger;
+
+parser code {:
+	private Scanner scanner;
+
+	public List<ErrInfo> errorInfo;
+
+	public Parser(	java_cup.runtime.Scanner s, 
+			ComplexSymbolFactory sf,
+			List<ErrInfo> errorInfo) {
+			    super(s,sf);
+			    this.errorInfo = errorInfo;
+			}
+
+
+	public static syntree parse(String file) throws Exception
+	{
+		ExtComplexSymbolFactory sf = new ExtComplexSymbolFactory();
+		Scanner scanner = new Scanner(new java.io.FileInputStream(file), sf);
+		return (syntree) new Parser(scanner, sf).parse().value;
+	}
+	
+	public static syntree parse(java.io.InputStream inputstream, List<ErrInfo> errorInfo) throws Exception
+	{
+		ExtComplexSymbolFactory sf = new ExtComplexSymbolFactory();
+		Scanner scanner = new Scanner(inputstream,sf);
+		java_cup.runtime.Symbol s = new Parser(scanner, sf, errorInfo).parse();
+		if (s == null)
+		    return null;
+		else
+		    return (syntree) s.value;
+	}
+	
+
+	public void report_error(String message, Object info) {
+	    ErrInfo einfo = new ErrInfo(0, 0, message);
+	    errorInfo.add(einfo);
+	    einfo.raw = info;
+
+    	    if (info instanceof ComplexSymbolFactory.ComplexSymbol) {
+		ComplexSymbolFactory.ComplexSymbol s = ((ComplexSymbolFactory.ComplexSymbol) info);
+		einfo.symbol = s;
+		if (s != null && s.getRight() != null && s.getLeft() != null) {
+			ComplexSymbolFactory.Location loc_abs = s.getLeft();
+			ComplexSymbolFactory.Location loc_line = s.getRight();
+	       	    	einfo.start = loc_abs.getLine();    
+	       	    	einfo.end = loc_abs.getColumn();    
+	       	    	einfo.line = loc_line.getLine();    
+	       	    	einfo.column = loc_line.getColumn();    
+	        }
+	    }
+	} 
+
+  public void report_fatal_error(String message, Object info) {
+      report_error(message, info);
+  }
+:}
+
+terminal LPAR, RPAR, LCUR, RCUR, 
+	 AND2, AND3, AND4, MINUS,
+	 DOUBLE_COLON, COLON, SEMI_COLON, COMMA,
+	 ERROR
+	;
+
+
+terminal BigInteger INTEGER;
+terminal String ID, STRING;
+terminal Double REAL;
+
+non terminal syntree record_list, record,
+	     item_list, item,
+	     expression,
+	     id, integer, real,
+	     tuple, op_minus_int
+	     ;
+
+
+precedence left COLON;
+precedence left COMMA;
+precedence left MINUS;
+
+record_list		::= record_list:rr record:r		{: RESULT = rr.add(r); :}
+			| record:r							{: RESULT = new syntree(alphabet.RECORD_LIST, r); :}
+			;
+
+
+record			::= AND3 id:i op_minus_int:n AND2
+			    id:type DOUBLE_COLON id:name SEMI_COLON
+			    LCUR
+				item_list:ll
+			    RCUR
+			    AND4
+												{: RESULT = new syntree(alphabet.RECORD, i, n, type, name, ll); :}
+			;
+
+op_minus_int	::= MINUS integer:n 			{: RESULT = n; :}
+				|								{: RESULT = new syntree(alphabet.INTEGER, new synvalue(new Integer(0))); :} 
+				;
+
+item_list	::= item_list:ii item:i				{: RESULT = ii.add(i); :}
+			| item:i							{: RESULT = new syntree(alphabet.ITEM_LIST, i); :}
+			;
+			
+item 		::= id:i COLON expression:s SEMI_COLON 	
+												{: RESULT = new syntree(alphabet.ITEM, i, s); :}
+			;
+
+expression		::=
+			| LPAR tuple:e RPAR					{: RESULT = new syntree(alphabet.TUPLE, e); :}
+			| expression:a COMMA expression:b	{: RESULT = syntree.multipack(alphabet.EXP_LIST, a, b); :}
+			| id:i COLON expression:e			{: RESULT = new syntree(alphabet.TAGGED, i, e); :}
+			| integer:i							{: RESULT = i; :}
+			| real:r							{: RESULT = r; :}
+			| id:i								{: RESULT = i; :}
+			| MINUS								{: RESULT = new syntree(alphabet.ID, new synvalue("-")); :}
+			| expression:l MINUS expression:r	{: RESULT = l; :} // TODO: account for part R
+			| LCUR expression:e RCUR			{: RESULT = new syntree(alphabet.SET, e); :}
+			;
+
+tuple			::= expression:e				{: RESULT = e; :}
+			| item_list:ii						{: RESULT = ii;:}
+			;
+
+id			::= ID:i 							{: RESULT = new syntree(alphabet.ID, new synvalue(i)); :}
+			| STRING:n 							{: RESULT = new syntree(alphabet.ID, new synvalue(n)); :}
+
+			; 
+
+integer		::= INTEGER:n 						{: RESULT = new syntree(alphabet.INTEGER, new synvalue(n)); :}
+			; 
+
+real		::= REAL:n 							{: RESULT = new syntree(alphabet.REAL, new synvalue(n)); :}
+			; 
+
+
+

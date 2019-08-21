@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:uk.ac.ncl.safecap.emf="uk.ac.ncl.safecap.emf" xmlns:uk.ac.ncl.safecap.emf.model="uk.ac.ncl.safecap.emf.model" xmlns:uk.ac.ncl.safecap.emf.schema="uk.ac.ncl.safecap.emf.schema" xmlns:uk.ac.ncl.safecap.emf.trackside="uk.ac.ncl.safecap.emf.trackside" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="uk.ac.ncl.safecap.emf.trackside">
+  <xsd:import namespace="uk.ac.ncl.safecap.emf.schema" schemaLocation="safecap.schemaXMI.xsd"/>
+  <xsd:import namespace="uk.ac.ncl.safecap.emf.model" schemaLocation="safecap.modelXMI.xsd"/>
+  <xsd:import namespace="uk.ac.ncl.safecap.emf" schemaLocation="safecapXMI.xsd"/>
+  <xsd:import namespace="http://www.omg.org/XMI" schemaLocation="platform:/plugin/org.eclipse.emf.ecore/model/XMI.xsd"/>
+  <xsd:complexType name="Trackside">
+    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+      <xsd:element name="equipment" type="uk.ac.ncl.safecap.emf.trackside:Equipment"/>
+      <xsd:element name="wires" type="uk.ac.ncl.safecap.emf.trackside:Wire"/>
+      <xsd:element ref="xmi:Extension"/>
+    </xsd:choice>
+    <xsd:attribute ref="xmi:id"/>
+    <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
+  </xsd:complexType>
+  <xsd:element name="Trackside" type="uk.ac.ncl.safecap.emf.trackside:Trackside"/>
+  <xsd:complexType abstract="true" name="Equipment">
+    <xsd:complexContent>
+      <xsd:extension base="uk.ac.ncl.safecap.emf:Labeled">
+        <xsd:attribute name="origin" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Equipment" type="uk.ac.ncl.safecap.emf.trackside:Equipment"/>
+  <xsd:complexType abstract="true" name="Signal">
+    <xsd:complexContent>
+      <xsd:extension base="uk.ac.ncl.safecap.emf.trackside:Equipment"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Signal" type="uk.ac.ncl.safecap.emf.trackside:Signal"/>
+  <xsd:complexType abstract="true" name="SpeedLimit">
+    <xsd:complexContent>
+      <xsd:extension base="uk.ac.ncl.safecap.emf.trackside:Equipment">
+        <xsd:choice maxOccurs="unbounded" minOccurs="0">
+          <xsd:element name="line" type="uk.ac.ncl.safecap.emf.model:Line"/>
+        </xsd:choice>
+        <xsd:attribute name="limit" type="xsd:int"/>
+        <xsd:attribute name="line" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SpeedLimit" type="uk.ac.ncl.safecap.emf.trackside:SpeedLimit"/>
+  <xsd:complexType name="LeftSignal">
+    <xsd:complexContent>
+      <xsd:extension base="uk.ac.ncl.safecap.emf.trackside:Signal"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="LeftSignal" type="uk.ac.ncl.safecap.emf.trackside:LeftSignal"/>
+  <xsd:complexType name="RightSignal">
+    <xsd:complexContent>
+      <xsd:extension base="uk.ac.ncl.safecap.emf.trackside:Signal"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RightSignal" type="uk.ac.ncl.safecap.emf.trackside:RightSignal"/>
+  <xsd:complexType name="LeftSpeedLimit">
+    <xsd:complexContent>
+      <xsd:extension base="uk.ac.ncl.safecap.emf.trackside:SpeedLimit"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="LeftSpeedLimit" type="uk.ac.ncl.safecap.emf.trackside:LeftSpeedLimit"/>
+  <xsd:complexType name="RightSpeedLimit">
+    <xsd:complexContent>
+      <xsd:extension base="uk.ac.ncl.safecap.emf.trackside:SpeedLimit"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RightSpeedLimit" type="uk.ac.ncl.safecap.emf.trackside:RightSpeedLimit"/>
+  <xsd:complexType name="Wire">
+    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+      <xsd:element name="from" type="uk.ac.ncl.safecap.emf.trackside:Equipment"/>
+      <xsd:element name="to" type="uk.ac.ncl.safecap.emf.schema:Segment"/>
+      <xsd:element ref="xmi:Extension"/>
+    </xsd:choice>
+    <xsd:attribute ref="xmi:id"/>
+    <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
+    <xsd:attribute name="from" type="xsd:string"/>
+    <xsd:attribute name="to" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:element name="Wire" type="uk.ac.ncl.safecap.emf.trackside:Wire"/>
+  <xsd:complexType name="RedLeftSignal">
+    <xsd:complexContent>
+      <xsd:extension base="uk.ac.ncl.safecap.emf.trackside:Signal"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RedLeftSignal" type="uk.ac.ncl.safecap.emf.trackside:RedLeftSignal"/>
+  <xsd:complexType name="RedRightSignal">
+    <xsd:complexContent>
+      <xsd:extension base="uk.ac.ncl.safecap.emf.trackside:Signal"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RedRightSignal" type="uk.ac.ncl.safecap.emf.trackside:RedRightSignal"/>
+  <xsd:complexType abstract="true" name="LeftSide">
+    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+      <xsd:element ref="xmi:Extension"/>
+    </xsd:choice>
+    <xsd:attribute ref="xmi:id"/>
+    <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
+  </xsd:complexType>
+  <xsd:element name="LeftSide" type="uk.ac.ncl.safecap.emf.trackside:LeftSide"/>
+  <xsd:complexType abstract="true" name="RightSide">
+    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+      <xsd:element ref="xmi:Extension"/>
+    </xsd:choice>
+    <xsd:attribute ref="xmi:id"/>
+    <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
+  </xsd:complexType>
+  <xsd:element name="RightSide" type="uk.ac.ncl.safecap.emf.trackside:RightSide"/>
+  <xsd:complexType name="StopAndGo">
+    <xsd:complexContent>
+      <xsd:extension base="uk.ac.ncl.safecap.emf.trackside:Equipment">
+        <xsd:attribute name="delay" type="xsd:int"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="StopAndGo" type="uk.ac.ncl.safecap.emf.trackside:StopAndGo"/>
+  <xsd:complexType name="LeftStopAndGo">
+    <xsd:complexContent>
+      <xsd:extension base="uk.ac.ncl.safecap.emf.trackside:StopAndGo"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="LeftStopAndGo" type="uk.ac.ncl.safecap.emf.trackside:LeftStopAndGo"/>
+  <xsd:complexType name="RightStopAndGo">
+    <xsd:complexContent>
+      <xsd:extension base="uk.ac.ncl.safecap.emf.trackside:StopAndGo"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RightStopAndGo" type="uk.ac.ncl.safecap.emf.trackside:RightStopAndGo"/>
+</xsd:schema>

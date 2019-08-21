@@ -1,0 +1,47 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Diagram utilities
+Bundle-SymbolicName: uk.ac.ncl.safecap.diagram.misc;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Newcastle University
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf,
+ org.eclipse.gmf,
+ org.eclipse.draw2d,
+ uk.ac.ncl.safecap.model;bundle-version="1.0.0",
+ uk.ac.ncl.safecap.model.edit;bundle-version="1.0.0",
+ org.eclipse.gmf.runtime.notation,
+ org.eclipse.core.commands,
+ org.eclipse.emf.transaction,
+ org.eclipse.gmf.runtime.common.core,
+ org.eclipse.gmf.runtime.diagram.ui,
+ org.eclipse.ui.ide,
+ org.eclipse.gmf.runtime.common.ui.action.ide,
+ org.eclipse.gmf.runtime.diagram.ui.render,
+ org.eclipse.gmf.runtime.diagram.ui.providers,
+ uk.ac.ncl.safecap.mcommon,
+ uk.ac.ncl.safecap.traintable,
+ uk.ac.ncl.safecap.servicepattern
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: 
+ org.eclipse.wb.swt,
+ org.swtchart,
+ org.swtchart.internal,
+ org.swtchart.internal.axis,
+ org.swtchart.internal.compress,
+ org.swtchart.internal.series,
+ uk.ac.ncl.safecap.diagram.misc.actions,
+ uk.ac.ncl.safecap.diagram.misc.copypaste,
+ uk.ac.ncl.safecap.diagram.misc.diagramactions,
+ uk.ac.ncl.safecap.diagram.misc.fa,
+ uk.ac.ncl.safecap.diagram.misc.highlights,
+ uk.ac.ncl.safecap.diagram.misc.parts,
+ uk.ac.ncl.safecap.diagram.misc.postprocess,
+ uk.ac.ncl.safecap.diagram.misc.propertypages,
+ uk.ac.ncl.safecap.diagram.misc.visibility,
+ uk.ac.ncl.safecap.diagram.misc.visual,
+ uk.ac.ncl.safecap.gui.trainconfig
+Import-Package: org.eclipse.gmf.runtime.diagram.ui.render.internal.providers,
+ org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts
+Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: uk.ac.ncl.safecap.diagram.misc

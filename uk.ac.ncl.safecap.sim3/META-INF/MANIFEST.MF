@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Sim3
+Bundle-SymbolicName: uk.ac.ncl.safecap.sim3;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Newcastle University
+Require-Bundle: uk.ac.ncl.safecap.scitus,
+ uk.ac.ncl.safecap.model,
+ uk.ac.ncl.safecap.mcommon,
+ org.eclipse.ui,
+ org.eclipse.ui.forms,
+ uk.ac.ncl.safecap.diagram.misc,
+ org.eclipse.ui.ide,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ uk.ac.ncl.safecap.servicepattern,
+ uk.ac.ncl.safecap.traintable,
+ uk.ac.ncl.safecap.capacity
+Export-Package: uk.ac.ncl.safecap.sim3.core
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: uk.ac.ncl.safecap.sim3

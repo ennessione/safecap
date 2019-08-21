@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:uk.ac.ncl.safecap.emf="uk.ac.ncl.safecap.emf" xmlns:uk.ac.ncl.safecap.emf.model="uk.ac.ncl.safecap.emf.model" xmlns:uk.ac.ncl.safecap.emf.schema="uk.ac.ncl.safecap.emf.schema" xmlns:uk.ac.ncl.safecap.emf.trackside="uk.ac.ncl.safecap.emf.trackside" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="uk.ac.ncl.safecap.emf.model">
+  <xsd:import namespace="uk.ac.ncl.safecap.emf.trackside" schemaLocation="safecap.tracksideXMI.xsd"/>
+  <xsd:import namespace="uk.ac.ncl.safecap.emf.schema" schemaLocation="safecap.schemaXMI.xsd"/>
+  <xsd:import namespace="uk.ac.ncl.safecap.emf" schemaLocation="safecapXMI.xsd"/>
+  <xsd:import namespace="http://www.omg.org/XMI" schemaLocation="platform:/plugin/org.eclipse.emf.ecore/model/XMI.xsd"/>
+  <xsd:complexType name="Model">
+    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+      <xsd:element name="lines" type="uk.ac.ncl.safecap.emf.model:Line"/>
+      <xsd:element name="routes" type="uk.ac.ncl.safecap.emf.model:Route"/>
+      <xsd:element name="ambits" type="uk.ac.ncl.safecap.emf.model:Ambit"/>
+      <xsd:element ref="xmi:Extension"/>
+    </xsd:choice>
+    <xsd:attribute ref="xmi:id"/>
+    <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
+    <xsd:attribute name="overlaps" type="xsd:boolean"/>
+    <xsd:attribute name="autoroutes" type="xsd:boolean"/>
+  </xsd:complexType>
+  <xsd:element name="Model" type="uk.ac.ncl.safecap.emf.model:Model"/>
+  <xsd:complexType name="Line">
+    <xsd:complexContent>
+      <xsd:extension base="uk.ac.ncl.safecap.emf:Labeled">
+        <xsd:choice maxOccurs="unbounded" minOccurs="0">
+          <xsd:element name="routes" type="uk.ac.ncl.safecap.emf.model:Route"/>
+        </xsd:choice>
+        <xsd:attribute name="color" type="xsd:string"/>
+        <xsd:attribute name="orientation" type="uk.ac.ncl.safecap.emf:Orientation"/>
+        <xsd:attribute name="routes" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Line" type="uk.ac.ncl.safecap.emf.model:Line"/>
+  <xsd:complexType name="Route">
+    <xsd:complexContent>
+      <xsd:extension base="uk.ac.ncl.safecap.emf:Labeled">
+        <xsd:choice maxOccurs="unbounded" minOccurs="0">
+          <xsd:element name="ambits" type="uk.ac.ncl.safecap.emf.model:Ambit"/>
+          <xsd:element name="segments" type="uk.ac.ncl.safecap.emf.schema:Segment"/>
+          <xsd:element name="overlap" type="uk.ac.ncl.safecap.emf.model:Ambit"/>
+          <xsd:element name="rule" type="uk.ac.ncl.safecap.emf.model:Rule"/>
+        </xsd:choice>
+        <xsd:attribute name="ambits" type="xsd:string"/>
+        <xsd:attribute name="segments" type="xsd:string"/>
+        <xsd:attribute name="overlap" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Route" type="uk.ac.ncl.safecap.emf.model:Route"/>
+  <xsd:complexType abstract="true" name="Ambit">
+    <xsd:complexContent>
+      <xsd:extension base="uk.ac.ncl.safecap.emf:Labeled">
+        <xsd:choice maxOccurs="unbounded" minOccurs="0">
+          <xsd:element name="segments" type="uk.ac.ncl.safecap.emf.schema:Segment"/>
+        </xsd:choice>
+        <xsd:attribute name="segments" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Ambit" type="uk.ac.ncl.safecap.emf.model:Ambit"/>
+  <xsd:complexType name="Section">
+    <xsd:complexContent>
+      <xsd:extension base="uk.ac.ncl.safecap.emf.model:Ambit"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Section" type="uk.ac.ncl.safecap.emf.model:Section"/>
+  <xsd:complexType name="Junction">
+    <xsd:complexContent>
+      <xsd:extension base="uk.ac.ncl.safecap.emf.model:Ambit">
+        <xsd:choice maxOccurs="unbounded" minOccurs="0">
+          <xsd:element name="points" type="uk.ac.ncl.safecap.emf.model:Point"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Junction" type="uk.ac.ncl.safecap.emf.model:Junction"/>
+  <xsd:complexType name="Point">
+    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+      <xsd:element name="node" type="uk.ac.ncl.safecap.emf.schema:Node"/>
+      <xsd:element name="rule" type="uk.ac.ncl.safecap.emf.model:Rule"/>
+      <xsd:element ref="xmi:Extension"/>
+    </xsd:choice>
+    <xsd:attribute ref="xmi:id"/>
+    <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
+    <xsd:attribute name="node" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:element name="Point" type="uk.ac.ncl.safecap.emf.model:Point"/>
+  <xsd:complexType name="Rule">
+    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+      <xsd:element name="clear" type="uk.ac.ncl.safecap.emf.model:Ambit"/>
+      <xsd:element name="occupied" type="uk.ac.ncl.safecap.emf.model:Ambit"/>
+      <xsd:element name="normal" type="uk.ac.ncl.safecap.emf.model:Point"/>
+      <xsd:element name="reverse" type="uk.ac.ncl.safecap.emf.model:Point"/>
+      <xsd:element name="lit" type="uk.ac.ncl.safecap.emf.trackside:Signal"/>
+      <xsd:element name="stop" type="uk.ac.ncl.safecap.emf.trackside:Signal"/>
+      <xsd:element name="proceed" type="uk.ac.ncl.safecap.emf.trackside:Signal"/>
+      <xsd:element ref="xmi:Extension"/>
+    </xsd:choice>
+    <xsd:attribute ref="xmi:id"/>
+    <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
+    <xsd:attribute name="clear" type="xsd:string"/>
+    <xsd:attribute name="occupied" type="xsd:string"/>
+    <xsd:attribute name="normal" type="xsd:string"/>
+    <xsd:attribute name="reverse" type="xsd:string"/>
+    <xsd:attribute name="lit" type="xsd:string"/>
+    <xsd:attribute name="stop" type="xsd:string"/>
+    <xsd:attribute name="proceed" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:element name="Rule" type="uk.ac.ncl.safecap.emf.model:Rule"/>
+</xsd:schema>

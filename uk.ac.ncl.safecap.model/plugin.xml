@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ <copyright>
+ </copyright>
+
+ $Id$
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="uk.ac.ncl.safecap.emf"
+            class="safecap.SafecapPackage"
+            genModel="model/safecap.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="uk.ac.ncl.safecap.emf.schema"
+            class="safecap.schema.SchemaPackage"
+            genModel="model/safecap.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="uk.ac.ncl.safecap.emf.model"
+            class="safecap.model.ModelPackage"
+            genModel="model/safecap.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated safecap -->
+      <package
+            uri="uk.ac.ncl.safecap.emf.trackside"
+            class="safecap.trackside.TracksidePackage"
+            genModel="model/safecap.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated safecap -->
+      <package
+            uri="uk.ac.ncl.safecap.emf.commentary"
+            class="safecap.commentary.CommentaryPackage"
+            genModel="model/safecap.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated safecap -->
+      <package
+            uri="uk.ac.ncl.safecap.emf.extension"
+            class="safecap.extension.ExtensionPackage"
+            genModel="model/safecap.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated safecap -->
+      <package
+            uri="uk.ac.ncl.safecap.emf.derived"
+            class="safecap.derived.DerivedPackage"
+            genModel="model/safecap.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated safecap -->
+      <package
+            uri="uk.ac.ncl.safecap.emf.config"
+            class="safecap.config.ConfigPackage"
+            genModel="model/safecap.genmodel"/>
+   </extension>
+
+</plugin>

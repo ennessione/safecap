@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gmftool:ToolRegistry
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:gmftool="http://www.eclipse.org/gmf/2005/ToolDefinition">
+  <allMenus
+      xsi:type="gmftool:ContextMenu"
+      default="//@allMenus.0/@items.0">
+    <items
+        xsi:type="gmftool:MenuAction"
+        title="Create"
+        hotKey=""/>
+    <items
+        xsi:type="gmftool:Separator"/>
+  </allMenus>
+  <palette
+      default="//@palette/@tools.0/@tools.0">
+    <tools
+        xsi:type="gmftool:ToolGroup"
+        title="Rail"
+        description="Generated node creation tools"
+        active="//@palette/@tools.0/@tools.0">
+      <tools
+          xsi:type="gmftool:CreationTool"
+          title="Node"
+          description="Node"/>
+      <tools
+          xsi:type="gmftool:CreationTool"
+          title="Segment"
+          description="Segment"/>
+    </tools>
+    <tools
+        xsi:type="gmftool:ToolGroup"
+        title="Trackside"
+        collapsible="true">
+      <tools
+          xsi:type="gmftool:CreationTool"
+          title="Wire"/>
+      <tools
+          xsi:type="gmftool:CreationTool"
+          title="Signal [L]"/>
+      <tools
+          xsi:type="gmftool:CreationTool"
+          title="Signal [R]"/>
+      <tools
+          xsi:type="gmftool:CreationTool"
+          title="Speed Limit [L]"/>
+      <tools
+          xsi:type="gmftool:CreationTool"
+          title="Speed Limit [R]"/>
+      <tools
+          xsi:type="gmftool:CreationTool"
+          title="Fixed Red [L]"/>
+      <tools
+          xsi:type="gmftool:CreationTool"
+          title="Fixed Red [R]"/>
+      <tools
+          xsi:type="gmftool:CreationTool"
+          title="Station [L]"
+          description=""/>
+      <tools
+          xsi:type="gmftool:CreationTool"
+          title="Station [R]"
+          description=""/>
+    </tools>
+    <tools
+        xsi:type="gmftool:ToolGroup"
+        title="Commentary"
+        collapsible="true"
+        stack="true">
+      <tools
+          xsi:type="gmftool:CreationTool"
+          title="Platform"
+          description="Platform"/>
+      <tools
+          xsi:type="gmftool:CreationTool"
+          title="Bridge"
+          description="Bridge"/>
+      <tools
+          xsi:type="gmftool:CreationTool"
+          title="SubSchema"
+          description="SubSchema"/>
+    </tools>
+  </palette>
+</gmftool:ToolRegistry>

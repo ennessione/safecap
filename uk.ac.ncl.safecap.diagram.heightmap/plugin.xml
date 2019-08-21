@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+    <extension point="org.eclipse.ui.views.properties.tabbed.propertyTabs" id="proptabs_heightmap">
+      <?gmfgen generated="false"?>   
+      <propertyTabs contributorId="uk.ac.ncl.safecap.diagram">
+          <propertyTab
+             category="extra"
+             id="property.tab.heightmap"
+             label="Height Map"/>
+      </propertyTabs>
+   </extension>
+   
+   <extension point="org.eclipse.ui.views.properties.tabbed.propertySections" id="propsections_heightmap">
+   <?gmfgen generated="false"?>
+     <propertySections contributorId="uk.ac.ncl.safecap.diagram">
+         <propertySection id="property.section.HeightmapPropertySection" 
+            class="uk.ac.ncl.safecap.diagram.heightmap.SimpleHeightmapPropertySection" 
+            tab="property.tab.heightmap"
+            filter="uk.ac.ncl.safecap.diagram.heightmap.HeightmapSectionFilter">
+            <input type="org.eclipse.gmf.runtime.notation.View"/>
+            <input type="org.eclipse.gef.EditPart"/>
+            <input type="safecap.diagram.navigator.SafecapAbstractNavigatorItem"/>
+            <input type="safecap.schema.Segment"/>
+         </propertySection>
+      </propertySections>
+   </extension>
+</plugin>

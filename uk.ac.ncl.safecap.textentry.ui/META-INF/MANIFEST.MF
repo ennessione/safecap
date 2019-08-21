@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test
+Bundle-SymbolicName: uk.ac.ncl.safecap.textentry.ui;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.eclipse.jface.text,
+ org.eclipse.ui.editors,
+ org.eclipse.ui.genericeditor,
+ org.eclipse.core.filebuffers,
+ org.eclipse.core.resources,
+ uk.ac.ncl.safecap.mcommon,
+ uk.ac.ncl.safecap.textentry,
+ org.eclipse.ui.ide
+Automatic-Module-Name: test
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

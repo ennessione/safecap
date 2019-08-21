@@ -1,0 +1,60 @@
+prepare classes of the form:
+
+
+NCSTemplate1 {
+	private int x0;
+	private Object[] set0;
+	private int x1;
+	private Object[] set1;
+	private int x2;
+	private Object[] set2;
+	private int x3;
+	private Object[] set3;
+	private int x4;
+	private Object[] set4;
+	private int x5;
+	private Object[] set5;
+	private int x6;
+	private Object[] set6;
+	private int x7;
+	private Object[] set7;
+	private int x8;
+	private Object[] set8;
+	private int x9;
+	private Object[] set9;
+	private int x10;
+	private Object[] set10;
+
+
+
+	private CompiledExpression test;
+	private Object[] context;
+	
+	public NCSTemplate1() {
+		context = new Object[] { this };
+	}
+	
+	public boolean csolve0() {
+		
+		for(x0 = 0; x0 < set0.length; x0++) {
+			if (compiled.evaluate_boolean(context))
+				if (solutionFound(index))
+						return true;
+		}
+		return false;
+	}
+
+	public boolean csolve1() {
+		// assuming var0 is compiled as set0[x0]
+		for(x0 = 0; x0 < set0.length; x0++) {
+			for(x1 = 0; x1 < set1.length; x1++) {
+				if (compiled.evaluate_boolean(context))
+					if (solutionFound(index))
+						return true;
+			}
+		}
+		return false;
+	}
+	
+}
+

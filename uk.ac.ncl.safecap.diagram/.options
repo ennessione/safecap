@@ -1,0 +1,7 @@
+# Tracing options for the uk.ac.ncl.safecap.diagram plug-in
+
+# Common issues
+uk.ac.ncl.safecap.diagram/debug=false
+
+# Visual IDs
+uk.ac.ncl.safecap.diagram/debug/visualID=false

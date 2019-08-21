@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Simulation Replay
+Bundle-SymbolicName: uk.ac.ncl.safecap.replay; singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: uk.ac.ncl.safecap.replay.Activator
+Bundle-Vendor: Newcastle University
+Require-Bundle: uk.ac.ncl.safecap.capacity,
+ uk.ac.ncl.safecap.diagram,
+ org.eclipse.ui.ide,
+ org.eclipse.gmf.runtime.diagram.ui,
+ uk.ac.ncl.safecap.scitus;bundle-version="1.0.0",
+ uk.ac.ncl.safecap.diagram.misc;bundle-version="1.0.0",
+ uk.ac.ncl.safecap.mcommon
+Bundle-ActivationPolicy: lazy
+Export-Package: uk.ac.ncl.safecap.replay
+Bundle-ClassPath: .
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: uk.ac.ncl.safecap.replay

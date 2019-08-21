@@ -1,0 +1,33 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Xml Data
+Bundle-SymbolicName: uk.ac.ncl.safecap.xdata.import;singleton:=true
+Bundle-Version: 1.1.0.qualifier
+Bundle-Activator: uk.ac.ncl.safecap.xmldata.ui.XmlDataPlugin
+Bundle-Vendor: Newcastle University
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.ui.ide,
+ uk.ac.ncl.safecap.model.edit,
+ uk.ac.ncl.safecap.mcommon,
+ org.eclipse.gmf.runtime.gef.ui,
+ uk.ac.ncl.safecap.xdata.base,
+ org.apache.commons.lang,
+ org.eclipse.swt,
+ org.eclipse.gmf.runtime.notation,
+ org.eclipse.gmf.runtime.notation.edit,
+ org.eclipse.gmf.runtime.diagram.ui,
+ org.eclipse.gmf.runtime.diagram.ui.render,
+ uk.ac.ncl.safecap.diagram.misc,
+ uk.ac.ncl.safecap.diagram,
+ org.eclipse.gmf.runtime.diagram.ui.resources.editor,
+ org.eclipse.zest.core,
+ org.eclipse.zest.layouts
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Export-Package: uk.ac.ncl.safecap.gui.infographs,
+ uk.ac.ncl.safecap.gui.infographs.dependencies,
+ uk.ac.ncl.safecap.xmldata.ui
+Automatic-Module-Name: uk.ac.ncl.safecap.xdata.import

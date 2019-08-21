@@ -1,0 +1,31 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Capacity providers
+Bundle-SymbolicName: uk.ac.ncl.safecap.capacity;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: uk.ac.ncl.safecap.capacity.main.Activator
+Bundle-Vendor: Newcastle University
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ uk.ac.ncl.safecap.model;bundle-version="1.0.0",
+ org.eclipse.core.resources,
+ uk.ac.ncl.safecap.scitus;bundle-version="1.0.0",
+ uk.ac.ncl.safecap.diagram.misc;bundle-version="1.0.0",
+ uk.ac.ncl.safecap.servicepattern;bundle-version="1.0.0",
+ uk.ac.ncl.safecap.traintable;bundle-version="1.0.0",
+ org.eclipse.zest.core,
+ org.eclipse.zest.layouts,
+ org.eclipse.ui.ide,
+ uk.ac.ncl.safecap.mcommon;bundle-version="1.0.0",
+ uk.ac.ncl.safecap.diagram
+Bundle-ActivationPolicy: lazy
+Export-Package: uk.ac.ncl.safecap.capacity.actions,
+ uk.ac.ncl.safecap.capacity.blockdiagram,
+ uk.ac.ncl.safecap.capacity.experiment,
+ uk.ac.ncl.safecap.capacity.heatmap,
+ uk.ac.ncl.safecap.capacity.main,
+ uk.ac.ncl.safecap.capacity.ranking,
+ uk.ac.ncl.safecap.capacity.views
+Bundle-ClassPath: .
+Automatic-Module-Name: uk.ac.ncl.safecap.capacity
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

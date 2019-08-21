@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Heightmap Property Section
+Bundle-SymbolicName: uk.ac.ncl.safecap.diagram.heightmap;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: uk.ac.ncl.safecap.diagram.heightmap.Activator
+Bundle-Vendor: Newcastle University
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.gmf,
+ org.eclipse.gmf.runtime.diagram.ui,
+ org.eclipse.gmf.runtime.diagram.ui.properties,
+ uk.ac.ncl.safecap.model;bundle-version="1.0.0",
+ uk.ac.ncl.safecap.model.edit;bundle-version="1.0.0",
+ uk.ac.ncl.safecap.diagram;bundle-version="1.0.0",
+ uk.ac.ncl.safecap.mcommon
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .,
+ swing2swt.jar
+Export-Package: uk.ac.ncl.safecap.diagram.heightmap
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: uk.ac.ncl.safecap.diagram.heightmap

@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/uk.ac.ncl.safecap.model/src" modelPluginID="uk.ac.ncl.safecap.model"
+    modelName="Safecap" rootExtendsInterface="uk.ac.ncl.safecap.model.misc.ESerializableObject"
+    rootImplementsInterface="" importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0"
+    copyrightFields="false">
+  <foreignModel>safecap.ecore</foreignModel>
+  <genPackages prefix="Safecap" disposableProviderFactory="true" ecorePackage="safecap.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="safecap.ecore#//Orientation">
+      <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//Orientation/Left"/>
+      <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//Orientation/Right"/>
+      <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//Orientation/Any"/>
+    </genEnums>
+    <genClasses ecoreClass="safecap.ecore#//Labeled">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//Labeled/label"/>
+    </genClasses>
+    <genClasses ecoreClass="safecap.ecore#//Project">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference safecap.ecore#//Project/configuration"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference safecap.ecore#//Project/routebuilder"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//Project/darkmatter"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="safecap.ecore#//Visual">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//Visual/visible"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference safecap.ecore#//Visual/style"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference safecap.ecore#//Visual/intervals"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference safecap.ecore#//Visual/markers"/>
+    </genClasses>
+    <genClasses ecoreClass="safecap.ecore#//Style">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//Style/foreground"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//Style/background"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//Style/linewidth"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//Style/linestyle"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="safecap.ecore#//Provenance">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//Provenance/origin"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//Provenance/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//Provenance/version"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//Provenance/date"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="safecap.ecore#//Extensible">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//Extensible/attributes"/>
+    </genClasses>
+    <genClasses ecoreClass="safecap.ecore#//HighlightedInterval">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference safecap.ecore#//HighlightedInterval/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//HighlightedInterval/label"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//HighlightedInterval/from"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//HighlightedInterval/to"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//HighlightedInterval/owner"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//HighlightedInterval/index"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//HighlightedInterval/voffset"/>
+    </genClasses>
+    <genClasses ecoreClass="safecap.ecore#//VisualMarker">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference safecap.ecore#//VisualMarker/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//VisualMarker/label"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//VisualMarker/position"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//VisualMarker/owner"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//VisualMarker/index"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//VisualMarker/offsetLabel"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="safecap.ecore#//TransientValues">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//TransientValues/runtimeAttributes"/>
+    </genClasses>
+    <nestedGenPackages prefix="Schema" basePackage="safecap" disposableProviderFactory="true"
+        ecorePackage="safecap.ecore#//schema">
+      <genEnums typeSafeEnumCompatible="false" ecoreEnum="safecap.ecore#//schema/NodeKind">
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//schema/NodeKind/Silent"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//schema/NodeKind/Normal"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//schema/NodeKind/Boundary"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//schema/NodeKind/Terminal"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//schema/NodeKind/Crossover"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//schema/NodeKind/Point"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//schema/NodeKind/SwitchedCrossover"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//schema/NodeKind/Invalid"/>
+      </genEnums>
+      <genEnums typeSafeEnumCompatible="false" ecoreEnum="safecap.ecore#//schema/NodeRole">
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//schema/NodeRole/None"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//schema/NodeRole/LeftOverlap"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//schema/NodeRole/RightOverlap"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//schema/NodeRole/LeftPoint"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//schema/NodeRole/Source"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//schema/NodeRole/Sink"/>
+      </genEnums>
+      <genEnums typeSafeEnumCompatible="false" ecoreEnum="safecap.ecore#//schema/SegmentRole">
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//schema/SegmentRole/None"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//schema/SegmentRole/Junction"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//schema/SegmentRole/CrossA"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//schema/SegmentRole/CrossB"/>
+      </genEnums>
+      <genEnums typeSafeEnumCompatible="false" ecoreEnum="safecap.ecore#//schema/PointRole">
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//schema/PointRole/None"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//schema/PointRole/Normal"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//schema/PointRole/Reverse"/>
+      </genEnums>
+      <genClasses ecoreClass="safecap.ecore#//schema/Schema">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//schema/Schema/nodes"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//schema/Schema/segments"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//schema/Segment">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//schema/Segment/from"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//schema/Segment/to"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//schema/Segment/heightmap"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//schema/Segment/role"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//schema/Segment/pointrole"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//schema/Segment/length"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//schema/Segment/speed"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//schema/Segment/gradient"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//schema/Segment/speedlimit"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//schema/Segment/orientation"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="safecap.ecore#//schema/Node">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//schema/Node/altitude"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//schema/Node/kind"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//schema/Node/roles"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//schema/Node/speedlimit"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//schema/TerminalNode"/>
+      <genClasses ecoreClass="safecap.ecore#//schema/HeightMap">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//schema/HeightMap/points"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//schema/HeightPoint">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//schema/HeightPoint/altitude"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//schema/HeightPoint/position"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//schema/RouteSpeed">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//schema/RouteSpeed/route"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//schema/RouteSpeed/speed"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//schema/SubSchemaNode">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//schema/SubSchemaNode/paths"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//schema/SubSchemaNode/children"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//schema/SubSchemaPath">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//schema/SubSchemaPath/length"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EAttribute safecap.ecore#//schema/SubSchemaPath/from"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EAttribute safecap.ecore#//schema/SubSchemaPath/to"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//schema/SubSchemaPath/pnormal"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//schema/SubSchemaPath/preverse"/>
+      </genClasses>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Model" basePackage="safecap" disposableProviderFactory="true"
+        ecorePackage="safecap.ecore#//model">
+      <genClasses ecoreClass="safecap.ecore#//model/Model">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//model/Model/lines"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//model/Model/routes"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//model/Model/ambits"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//model/Line">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//model/Line/routes"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//model/Line/color"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//model/Line/orientation"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//model/Line/trafficmix"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//model/Route">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//model/Route/ambits"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//model/Route/segments"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//model/Route/overlap"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//model/Route/rule"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//model/Route/aspects"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//model/Route/orientation"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//model/Route/logic"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//model/Route/defaultlogic"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="safecap.ecore#//model/Ambit">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//model/Ambit/segments"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//model/Section"/>
+      <genClasses ecoreClass="safecap.ecore#//model/Junction">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//model/Junction/points"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//model/Point">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//model/Point/node"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//model/Point/rule"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//model/Rule">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//model/Rule/clear"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//model/Rule/occupied"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//model/Rule/normal"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//model/Rule/reverse"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//model/Rule/routeState"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//model/TimedOccupationRule">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//model/TimedOccupationRule/ambit"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//model/TimedOccupationRule/time"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//model/RouteStateRule">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//model/RouteStateRule/route"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//model/RouteStateRule/state"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//model/ControlLogic">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//model/ControlLogic/line"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//model/ControlLogic/aspects"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//model/ControlLogic/rule"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//model/ControlLogic/normal"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//model/ControlLogic/reverse"/>
+      </genClasses>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Trackside" basePackage="safecap" disposableProviderFactory="true"
+        ecorePackage="safecap.ecore#//trackside">
+      <genEnums typeSafeEnumCompatible="false" ecoreEnum="safecap.ecore#//trackside/SignalType">
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//trackside/SignalType/Controlled"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//trackside/SignalType/Automatic"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//trackside/SignalType/Distant"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//trackside/SignalType/SemiAutomatic"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//trackside/SignalType/BannerRepeater"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//trackside/SignalType/Shunt"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//trackside/SignalType/PresetShunt"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//trackside/SignalType/BlockMarker"/>
+        <genEnumLiterals ecoreEnumLiteral="safecap.ecore#//trackside/SignalType/VirtualBlockMarker"/>
+      </genEnums>
+      <genClasses ecoreClass="safecap.ecore#//trackside/Trackside">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//trackside/Trackside/equipment"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//trackside/Trackside/wires"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//trackside/Trackside/nodewires"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//trackside/Trackside/subwires"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//trackside/Trackside/subequipment"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//trackside/Equipment"/>
+      <genClasses ecoreClass="safecap.ecore#//trackside/Signal">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//trackside/Signal/type"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//trackside/SpeedLimit">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//trackside/SpeedLimit/line"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//trackside/SpeedLimit/limit"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//trackside/LeftSignal"/>
+      <genClasses ecoreClass="safecap.ecore#//trackside/RightSignal"/>
+      <genClasses ecoreClass="safecap.ecore#//trackside/LeftSpeedLimit"/>
+      <genClasses ecoreClass="safecap.ecore#//trackside/RightSpeedLimit"/>
+      <genClasses ecoreClass="safecap.ecore#//trackside/Wire">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//trackside/Wire/from"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//trackside/Wire/to"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//trackside/Wire/offset"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//trackside/RedLeftSignal"/>
+      <genClasses ecoreClass="safecap.ecore#//trackside/RedRightSignal"/>
+      <genClasses image="false" ecoreClass="safecap.ecore#//trackside/LeftSide"/>
+      <genClasses image="false" ecoreClass="safecap.ecore#//trackside/RightSide"/>
+      <genClasses ecoreClass="safecap.ecore#//trackside/StopAndGo">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//trackside/StopAndGo/delay"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//trackside/StopAndGo/line"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//trackside/StopAndGo/releaseRoute"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//trackside/LeftStopAndGo"/>
+      <genClasses ecoreClass="safecap.ecore#//trackside/RightStopAndGo"/>
+      <genClasses ecoreClass="safecap.ecore#//trackside/SubEquipment"/>
+      <genClasses ecoreClass="safecap.ecore#//trackside/SubWire">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//trackside/SubWire/from"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//trackside/SubWire/to"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//trackside/NodeWire">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//trackside/NodeWire/from"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//trackside/NodeWire/to"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//trackside/GenericLocatedEquipment">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//trackside/GenericLocatedEquipment/offset"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//trackside/GenericLocatedEquipment/type"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//trackside/GenericLocatedEquipment/segment"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//trackside/GenericLocatedEquipment/orientation"/>
+      </genClasses>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Commentary" basePackage="safecap" disposableProviderFactory="true"
+        ecorePackage="safecap.ecore#//commentary">
+      <genClasses ecoreClass="safecap.ecore#//commentary/Comments">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//commentary/Comments/comments"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="safecap.ecore#//commentary/Commentary"/>
+      <genClasses ecoreClass="safecap.ecore#//commentary/OrientableCommentary">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//commentary/OrientableCommentary/angle"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//commentary/Station"/>
+      <genClasses ecoreClass="safecap.ecore#//commentary/Bridge"/>
+      <genClasses ecoreClass="safecap.ecore#//commentary/Road"/>
+      <genClasses ecoreClass="safecap.ecore#//commentary/Tunnel"/>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Extension" basePackage="safecap" disposableProviderFactory="true"
+        ecorePackage="safecap.ecore#//extension">
+      <genClasses image="false" ecoreClass="safecap.ecore#//extension/ExtAttribute">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//extension/ExtAttribute/domain"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//extension/ExtAttribute/label"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="safecap.ecore#//extension/ExtAttributeInt">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//extension/ExtAttributeInt/value"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="safecap.ecore#//extension/ExtAttributeDbl">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//extension/ExtAttributeDbl/value"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="safecap.ecore#//extension/ExtAttributeStr">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//extension/ExtAttributeStr/value"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="safecap.ecore#//extension/ExtAttributeB">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//extension/ExtAttributeB/value"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="safecap.ecore#//extension/CustomFigure">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//extension/CustomFigure/filled"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//extension/CustomFigure/foreground"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//extension/CustomFigure/background"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//extension/CustomLabel">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//extension/CustomLabel/text"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//extension/CustomLabel/fontsize"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//extension/Point">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//extension/Point/x"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//extension/Point/y"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//extension/CustomColour">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//extension/CustomColour/red"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//extension/CustomColour/green"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//extension/CustomColour/blue"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//extension/CustomShape">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//extension/CustomShape/shape"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//extension/ExtVisual">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//extension/ExtVisual/figures"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//extension/ExtEquipment">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//extension/ExtEquipment/visual"/>
+      </genClasses>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Derived" basePackage="safecap" disposableProviderFactory="true"
+        ecorePackage="safecap.ecore#//derived">
+      <genClasses image="false" ecoreClass="safecap.ecore#//derived/Derived">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//derived/Derived/mergedpoints"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="safecap.ecore#//derived/DerivedElement">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//derived/DerivedElement/codes"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//derived/MergedPoint">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//derived/MergedPoint/points"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//derived/MergedAmbit">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//derived/MergedAmbit/ambits"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//derived/MergedAmbit/composed"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//derived/MergedAmbit/disjoint"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//derived/MergedJunction"/>
+      <genClasses ecoreClass="safecap.ecore#//derived/MergedSection"/>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Config" basePackage="safecap" disposableProviderFactory="true"
+        ecorePackage="safecap.ecore#//config">
+      <genClasses ecoreClass="safecap.ecore#//config/SchemaConfiguration">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//config/SchemaConfiguration/wnSignal"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//config/SchemaConfiguration/wnTrack"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//config/SchemaConfiguration/mergedambits"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//config/SchemaConfiguration/mergedpoints"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//config/SchemaConfiguration/normpoint"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//config/SchemaConfiguration/normtrack"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//config/SchemaConfiguration/normsignal"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference safecap.ecore#//config/SchemaConfiguration/overlaps"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//config/MergedAmbitsConfiguration">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//config/MergedAmbitsConfiguration/name"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//config/MergedAmbitsConfiguration/delimiter"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//config/MergedAmbitsConfiguration/code"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//config/MergedPointsConfiguration">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//config/MergedPointsConfiguration/name"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//config/MergedPointsConfiguration/delimiter"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//config/MergedPointsConfiguration/code"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//config/NormalisationRule">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//config/NormalisationRule/pattern"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//config/NormalisationRule/template"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//config/AutoOverlapsConfiguration">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//config/AutoOverlapsConfiguration/minLength"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//config/AutoOverlapsConfiguration/maxLength"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="safecap.ecore#//config/RouteConstructionRule">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//config/RouteConstructionRule/name"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//config/RouteConstructionRule/ignoredsignals"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//config/AutoRouteConstructionRule"/>
+      <genClasses ecoreClass="safecap.ecore#//config/PathRouteConstructionRule">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//config/PathRouteConstructionRule/entry"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//config/PathRouteConstructionRule/exit"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute safecap.ecore#//config/PathRouteConstructionRule/pointstates"/>
+      </genClasses>
+      <genClasses ecoreClass="safecap.ecore#//config/RouteBuilderConfiguration">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference safecap.ecore#//config/RouteBuilderConfiguration/routes"/>
+      </genClasses>
+    </nestedGenPackages>
+  </genPackages>
+</genmodel:GenModel>

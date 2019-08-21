@@ -1,0 +1,351 @@
+package uk.ac.ncl.prime.sim.lang.parser;
+
+import java_cup.runtime.*;
+import java.util.*;
+
+parser code {:
+	private Scanner scanner;
+
+	public List<ErrInfo> errorInfo;
+
+	public Parser(	java_cup.runtime.Scanner s, 
+			ComplexSymbolFactory sf,
+			List<ErrInfo> errorInfo) {
+			    super(s,sf);
+			    this.errorInfo = errorInfo;
+			}
+
+
+	public static syntree parse(String file) throws Exception
+	{
+		ExtComplexSymbolFactory sf = new ExtComplexSymbolFactory();
+		Scanner scanner = new Scanner(new java.io.FileInputStream(file), sf);
+		return (syntree) new Parser(scanner, sf).parse().value;
+	}
+	
+	public static syntree parse(java.io.InputStream inputstream, List<ErrInfo> errorInfo) throws Exception
+	{
+		ExtComplexSymbolFactory sf = new ExtComplexSymbolFactory();
+		Scanner scanner = new Scanner(inputstream,sf);
+		java_cup.runtime.Symbol s = new Parser(scanner, sf, errorInfo).parse();
+		if (s == null)
+		    return null;
+		else
+		    return (syntree) s.value;
+	}
+	
+
+	public void report_error(String message, Object info) {
+	    ErrInfo einfo = new ErrInfo(0, 0, message);
+	    errorInfo.add(einfo);
+	    einfo.raw = info;
+
+    	    if (info instanceof ComplexSymbolFactory.ComplexSymbol) {
+		ComplexSymbolFactory.ComplexSymbol s = ((ComplexSymbolFactory.ComplexSymbol) info);
+		einfo.symbol = s;
+		if (s != null && s.getRight() != null && s.getLeft() != null) {
+			ComplexSymbolFactory.Location loc_abs = s.getLeft();
+			ComplexSymbolFactory.Location loc_line = s.getRight();
+	       	    	einfo.start = loc_abs.getLine();    
+	       	    	einfo.end = loc_abs.getColumn();    
+	       	    	einfo.line = loc_line.getLine();    
+	       	    	einfo.column = loc_line.getColumn();    
+	        }
+	    }
+	} 
+
+  public void report_fatal_error(String message, Object info) {
+      report_error(message, info);
+  }
+:}
+
+terminal LPAR, RPAR, LSQB, RSQB, BOOL, INT, TYPE_REAL,
+	SEQ, SET,
+	IF, ELSE, UNIT,
+	OP_PLUS, OP_MINUS, OP_MUL, OP_MAP, OP_TRUE, OP_FALSE,
+	OP_DIV, OP_LSS, OP_GRT, OP_LEQ, OP_NOT,
+	OP_GEQ, OP_MOD, OP_SETMINUS, OP_UNION,
+	OP_OVR, OP_GEN_UNION, OP_GEN_INTER, OP_MIN, OP_MAX, OP_SUM, OP_FCOMP,
+	OP_RANRES, OP_RANSUB, OP_CONVERSE,
+	OP_INTER, OP_RAN, OP_DOM, OP_CARD, OP_DOMRES, OP_SUBSET, OP_SUBSETEQ,
+	OP_DOMSUB, OP_EMPTYSET, OP_EQL, OP_NEQ,
+	OP_AND, OP_OR, CART, OP_RANGE, OP_PRJ1, OP_PRJ2, OP_SOME,
+	OP_IN, OP_COMMA, LCUR, RCUR, SEMIC, OP_EMPTYSEQ,
+	BCMEQ, UMINUS, OP_DOT, 
+	OP_PRIME,
+	OP_IMPLIES,
+	B_FORALL, B_EXISTS, VLINE, B_LAMBDA,
+	OP_PFUN, OP_REL, OP_NOTIN, OP_PINJ,
+	OP_FINITE, BCMSUCH,
+	MAGIC_SUB, MAGIC_TYP,
+	REAL, OP_DIRECT_PRODUCT, QUESTION
+	;
+
+
+terminal Integer NUMBER;
+terminal String ID, STRING, XTAG;
+
+non terminal syntree 
+	     type, 
+	     statements, statement,
+	     if_statement, 
+	     assignment, m_else,
+	     expression_list, expression, m_expression_list,
+    	   id, number, block,
+    	     img_app_expression, fexpression,
+    	     initialrule,
+    	     assertion,
+    	     typed_id, typed_id_list, 
+    	     par_assignment,
+    	     c_statement,
+    	     m_type,
+    	     m_id
+	     ;
+
+
+
+precedence nonassoc B_FORALL, B_EXISTS, B_LAMBDA;
+
+precedence nonassoc OP_IMPLIES;
+
+precedence left OP_AND, OP_OR;
+
+precedence left OP_NOT;
+
+precedence nonassoc OP_LSS, OP_GRT, OP_LEQ, OP_GEQ, OP_EQL, OP_NEQ;
+
+precedence nonassoc OP_IN, OP_NOTIN, OP_SUBSET, OP_SUBSETEQ;
+
+precedence left OP_MAP, OP_RANGE;
+
+precedence left OP_PLUS, OP_MINUS;
+
+precedence left OP_MUL, OP_DIV;
+
+precedence left OP_MOD;
+
+precedence right OP_PFUN, OP_REL, OP_PINJ;
+
+precedence left OP_SETMINUS, OP_UNION, OP_INTER, OP_OVR, OP_FCOMP, OP_DIRECT_PRODUCT;
+
+precedence left OP_DOMRES, OP_DOMSUB, OP_RANRES, OP_RANSUB;
+
+precedence right OP_CONVERSE;
+
+precedence left CART, OP_MIN, OP_MAX, OP_GEN_UNION, OP_GEN_INTER, OP_PRJ1, OP_PRJ2, OP_SOME, OP_FINITE;
+
+precedence left UMINUS, OP_DOT;
+
+precedence nonassoc OP_PRIME;
+
+precedence nonassoc ID, NUMBER, STRING, XTAG;
+
+initialrule	::= expression:e					{: RESULT = e; :}
+			| MAGIC_SUB statements:s			{: RESULT = s; :}
+			| MAGIC_TYP type:s					{: RESULT = s; :}
+			;
+
+
+m_type		::= OP_IN type:t					{: RESULT = t; :}
+			|									{: RESULT = new syntree(alphabet.TYPE_ANY); :}
+			;
+
+type		::= BOOL							{: RESULT = new syntree(alphabet.BOOL); :}
+			| INT								{: RESULT = new syntree(alphabet.INT); :}
+			| TYPE_REAL							{: RESULT = new syntree(alphabet.TYPE_REAL); :}
+			| INT OP_PRIME id:s					{: RESULT = new syntree(alphabet.INT, s); :}
+			| TYPE_REAL OP_PRIME id:s			{: RESULT = new syntree(alphabet.TYPE_REAL, s); :}
+			| UNIT								{: RESULT = new syntree(alphabet.TYPE_UNIT); :}
+			| SEQ LPAR type:t RPAR				{: RESULT = new syntree(alphabet.SEQ, t); :}
+			| SET LPAR type:t RPAR				{: RESULT = new syntree(alphabet.SET, t); :}
+			| type:l CART type:r				{: RESULT = new syntree(alphabet.CART, l, r); :}
+			| LPAR type:t RPAR					{: RESULT = t; :}
+			| QUESTION							{: RESULT = new syntree(alphabet.TYPE_NULL); :}
+			| id:i								{: RESULT = i; :}
+			;
+
+
+block	    ::= LCUR statements:ss RCUR			{: RESULT = new syntree(alphabet.BLOCK, ss); :}
+			;
+
+statements	::= statements:ss c_statement:s		{: RESULT = ss.add(s); :}
+			| c_statement:s						{: RESULT = new syntree(alphabet.STM_LIST, s); :}
+			;
+
+c_statement	::= statement:s						{: RESULT = s; :}
+			| block:c							{: RESULT = c; :}
+			;
+
+/*
+statement	::=  if_statement:i 				{: RESULT = i; :}
+			| assignment:a SEMIC				{: RESULT = a; :}
+			| par_assignment:a SEMIC			{: RESULT = a; :}
+			| assertion:v						{: RESULT = v; :} 
+			| statement:s XTAG:t				{: RESULT = new syntree(alphabet.XTAG, new synvalue(t), s); :}
+			| error SEMIC
+			;
+*/
+
+statement	::=  if_statement:i 				{: RESULT = i; :}
+			| assignment:a 	SEMIC				{: RESULT = a; :}
+			| par_assignment:a SEMIC			{: RESULT = a; :}
+			| assertion:v						{: RESULT = v; :} 
+			| error 
+			;
+
+
+par_assignment	::= par_assignment:vv 
+						VLINE assignment:a 				{: RESULT = vv.add(a); :}
+			| assignment:a VLINE assignment:b			{: RESULT = new syntree(alphabet.PAR_ASSIGN, a, b); :}
+			;
+
+assignment	::= id:i m_type:t BCMEQ expression:e		{: RESULT = new syntree(alphabet.BCMEQ, i, t, e, new syntree(alphabet.SKIP)); :}
+			| typed_id_list:i BCMSUCH expression:e		{: RESULT = new syntree(alphabet.BCMSUCH, i, e, new syntree(alphabet.SKIP)); :}
+			| id:i LSQB expression:z 
+			    RSQB BCMEQ expression:e  				{: RESULT = new syntree(alphabet.BCMEQ_SEQ, i, z, e); :}
+			;
+
+if_statement::= IF:b LPAR expression:c RPAR 
+			 c_statement:ss m_else:e 					{: RESULT = new syntree(alphabet.IF, c, ss, e); :}
+			;
+
+m_else		::= ELSE:b c_statement:ss					{: RESULT = ss; :}
+			|											{: RESULT = new syntree(alphabet.SKIP); :}
+			;
+
+assertion	::= LSQB:b expression:e RSQB:z				{: RESULT = new syntree(alphabet.ASSERTION, e); :}
+			|  id:b LSQB expression:e RSQB:z			{: RESULT = new syntree(alphabet.ASSERTION, b, e); :} 
+			;
+
+m_expression_list	::= expression_list:ee 				{: RESULT = ee; :}
+			|											{: RESULT = new syntree(alphabet.EXP_LIST); :}
+			;
+
+expression_list		::= expression_list:ee 
+						OP_COMMA expression:e 			{: RESULT = ee.add(e); :}
+			| expression:e								{: RESULT = new syntree(alphabet.EXP_LIST, e); :}
+			;
+
+expression		::= expression:l OP_AND:b expression:r	{: RESULT = syntree.multipack(alphabet.OP_AND, l, r); :}
+			| expression:l OP_OR:b expression:r			{: RESULT = syntree.multipack(alphabet.OP_OR, l, r); :}
+			| expression:l OP_PLUS:b expression:r		{: RESULT = syntree.multipack(alphabet.OP_PLUS, l, r); :}
+			| expression:l OP_MINUS:b expression:r		{: RESULT = syntree.multipack(alphabet.OP_MINUS, l, r); :}
+			| expression:l OP_MUL:b expression:r		{: RESULT = syntree.multipack(alphabet.OP_MUL, l, r); :}
+			| expression:l OP_DIV:b expression:r		{: RESULT = syntree.multipack(alphabet.OP_DIV, l, r); :}
+			| expression:l OP_UNION:b expression:r		{: RESULT = syntree.multipack(alphabet.OP_UNION, l, r); :}
+			| expression:l OP_INTER:b expression:r		{: RESULT = syntree.multipack(alphabet.OP_INTER, l, r); :}
+			| expression:l OP_OVR:b expression:r		{: RESULT = syntree.multipack(alphabet.OP_OVR, l, r); :}
+			| expression:l OP_SETMINUS:b 
+					    expression:r					{: RESULT = syntree.multipack(alphabet.OP_SETMINUS, l, r); :}
+
+			| expression:l OP_IMPLIES:b expression:r	{: RESULT = new syntree(alphabet.OP_IMPLIES, l, r); :}
+
+			| expression:l OP_EQL:b expression:r		{: RESULT = new syntree(alphabet.OP_EQL, l, r); :}
+			| expression:l OP_NEQ:b expression:r		{: RESULT = new syntree(alphabet.OP_NEQ, l, r); :}
+
+			| expression:l OP_LSS:b expression:r		{: RESULT = new syntree(alphabet.OP_LSS, l, r); :}
+			| expression:l OP_LEQ:b expression:r		{: RESULT = new syntree(alphabet.OP_LEQ, l, r); :}
+			| expression:l OP_GRT:b expression:r		{: RESULT = new syntree(alphabet.OP_GRT, l, r); :}
+			| expression:l OP_GEQ:b expression:r		{: RESULT = new syntree(alphabet.OP_GEQ, l, r); :}
+
+
+			| expression:l OP_MOD:b expression:r		{: RESULT = new syntree(alphabet.OP_MOD, l, r); :}
+
+			| expression:l OP_DOMRES:b expression:r		{: RESULT = new syntree(alphabet.OP_DOMRES, l, r); :}
+			| expression:l OP_DOMSUB:b expression:r		{: RESULT = new syntree(alphabet.OP_DOMSUB, l, r); :}
+			| expression:l OP_RANRES:b expression:r		{: RESULT = new syntree(alphabet.OP_RANRES, l, r); :}
+			| expression:l OP_RANSUB:b expression:r		{: RESULT = new syntree(alphabet.OP_RANSUB, l, r); :}
+			| expression:l OP_IN:b expression:r			{: RESULT = new syntree(alphabet.OP_IN, l, r); :}
+			| expression:l OP_NOTIN:b expression:r		{: RESULT = new syntree(alphabet.OP_NOTIN, l, r); :}
+			| expression:l OP_MAP:b expression:r		{: RESULT = new syntree(alphabet.OP_MAP, l, r); :}
+			| expression:l OP_FCOMP:b expression:r		{: RESULT = new syntree(alphabet.OP_FCOMP, l, r); :}
+			| expression:l OP_DIRECT_PRODUCT:b expression:r	{: RESULT = new syntree(alphabet.OP_DIRECT_PRODUCT, l, r); :}
+			| expression:l OP_RANGE:b expression:r		{: RESULT = new syntree(alphabet.OP_RANGE, l, r); :}
+			| expression:l OP_DOT:b expression:r		{: RESULT = new syntree(alphabet.OP_DOT, l, r); :}  %prec UMINUS
+
+			| expression:l OP_SUBSET:b expression:r		{: RESULT = new syntree(alphabet.OP_SUBSET, l, r); :}
+			| expression:l OP_SUBSETEQ:b 
+					    expression:r					{: RESULT = new syntree(alphabet.OP_SUBSETEQ, l, r); :}
+
+
+			| OP_MINUS:b expression:e					{: RESULT = new syntree(alphabet.OP_UNARY_MINUS, e); :} %prec UMINUS
+			| OP_NOT:b expression:e						{: RESULT = new syntree(alphabet.OP_NOT, e); :}
+			| expression:e OP_CONVERSE:b				{: RESULT = new syntree(alphabet.OP_CONVERSE, e); :}
+
+			| OP_RAN:b LPAR expression:r RPAR			{: RESULT = new syntree(alphabet.OP_RAN, r); :}
+			| OP_DOM:b LPAR expression:r RPAR			{: RESULT = new syntree(alphabet.OP_DOM, r); :}
+			| OP_CARD:b LPAR expression:r RPAR			{: RESULT = new syntree(alphabet.OP_CARD, r); :}
+			| OP_GEN_UNION:b LPAR expression:r RPAR		{: RESULT = new syntree(alphabet.OP_GEN_UNION, r); :}
+			| OP_GEN_INTER:b LPAR expression:r RPAR		{: RESULT = new syntree(alphabet.OP_GEN_INTER, r); :}
+			| OP_SUM:b LPAR expression:r RPAR			{: RESULT = new syntree(alphabet.OP_SUM, r); :}
+			| OP_MIN:b LPAR expression:r RPAR			{: RESULT = new syntree(alphabet.OP_MIN, r); :}
+			| OP_MAX:b LPAR expression:r RPAR			{: RESULT = new syntree(alphabet.OP_MAX, r); :}
+			| OP_PRJ1:b LPAR expression:r RPAR			{: RESULT = new syntree(alphabet.OP_PRJ1, r); :}
+			| OP_PRJ2:b LPAR expression:r RPAR			{: RESULT = new syntree(alphabet.OP_PRJ2, r); :}
+			| OP_SOME:b LPAR expression:r RPAR			{: RESULT = new syntree(alphabet.OP_SOME, r); :}
+			| OP_FINITE:b LPAR expression:t RPAR		{: RESULT = new syntree(alphabet.OP_FINITE, t); :}
+			| SET:b LPAR expression:t RPAR				{: RESULT = new syntree(alphabet.OP_SET, t); :}
+			| SEQ:b LPAR expression:t RPAR				{: RESULT = new syntree(alphabet.OP_SEQ, t); :}
+
+			| id:i OP_PRIME								{: RESULT = new syntree(alphabet.OP_PRIME, i); :}
+			| id:i OP_PRIME id:z						{: RESULT = new syntree(alphabet.OP_QUAL, i, z); :}
+			| id:i OP_PRIME number:z					{: RESULT = new syntree(alphabet.OP_QUAL, i, z); :}
+			| id:i OP_PRIME LPAR type:t m_id:z RPAR		{: RESULT = new syntree(alphabet.ID_TEMPL_TYPE, i, t, z); :}
+
+			| LPAR expression:e RPAR					{: RESULT = e; :}
+			| LCUR:b expression_list:ee RCUR:z			{: RESULT = new syntree(alphabet.SETC, ee); :}
+			| LCUR:b expression:x VLINE typed_id_list:ii SEMIC
+				expression:y RCUR:z						{: RESULT = new syntree(alphabet.B_SETCOMP, ii, x, y); :}
+
+			| B_FORALL:b typed_id_list:ii expression:e 	{: RESULT = new syntree(alphabet.B_FORALL, ii, e); :}
+			| B_EXISTS:b typed_id_list:ii expression:e 	{: RESULT = new syntree(alphabet.B_EXISTS, ii, e); :}
+			| B_LAMBDA:b typed_id_list:ii expression:e 	{: RESULT = new syntree(alphabet.B_LAMBDA, ii, e); :}
+
+			| expression:l OP_PFUN:b expression:r		{: RESULT = new syntree(alphabet.OP_PFUN, l, r); :}
+			| expression:l OP_PINJ:b expression:r		{: RESULT = new syntree(alphabet.OP_PINJ, l, r); :}
+			| expression:l OP_REL:b expression:r		{: RESULT = new syntree(alphabet.OP_REL, l, r); :}
+			| expression:l CART:b expression:r			{: RESULT = new syntree(alphabet.OP_CART, l, r); :}
+
+			
+			| LSQB:b expression_list:ee RSQB			{: RESULT = new syntree(alphabet.SEQC, ee); :}
+			| OP_EMPTYSET:b								{: RESULT = new syntree(alphabet.OP_EMPTYSET); :}
+			| OP_EMPTYSEQ:b								{: RESULT = new syntree(alphabet.OP_EMPTYSEQ); :}
+			| OP_TRUE:i									{: RESULT = new syntree(alphabet.OP_TRUE); :}
+			| OP_FALSE:i								{: RESULT = new syntree(alphabet.OP_FALSE); :}
+			| INT:i										{: RESULT = new syntree(alphabet.OP_INT); :}
+			| BOOL:i									{: RESULT = new syntree(alphabet.OP_BOOL); :}
+			| id:i										{: RESULT = i; :}
+			| number:n									{: RESULT = n; :}
+			| img_app_expression:r						{: RESULT = r; :} %prec UMINUS 
+			| expression:e XTAG:t						{: RESULT = new syntree(alphabet.XTAG, new synvalue(t), e); :}
+			;
+
+img_app_expression	::= fexpression:l LPAR 
+				m_expression_list:r RPAR 				{: RESULT = new syntree(alphabet.FAPP, l, r); :}  %prec UMINUS
+			| fexpression:l LSQB expression:r RSQB		{: RESULT = new syntree(alphabet.IMAGE, l, r); :}  %prec UMINUS
+			;
+
+fexpression		::= id: i								{: RESULT = i; :}
+			| id:l OP_DOT:b id:r						{: RESULT = new syntree(alphabet.OP_DOT, l, r); :} 
+			| expression:e OP_CONVERSE:b				{: RESULT = new syntree(alphabet.OP_CONVERSE, e); :}
+			| LPAR expression:e RPAR					{: RESULT = e; :}
+			;
+
+typed_id_list::= typed_id_list:l OP_COMMA typed_id:r	{: RESULT = l.add(r); :}
+			| typed_id:i 								{: RESULT = new syntree(alphabet.TYPED_ID_LIST, i); :}
+			;
+
+m_id		::= id:i									{: RESULT = i; :}
+			|											{: RESULT = new syntree(alphabet.ID, new synvalue("")); :}
+			;
+
+typed_id	::= ID:i m_type:t 							{: RESULT = new syntree(alphabet.TYPED_ID, new synvalue(i), t); :}
+			; 
+
+id			::= ID:i 									{: RESULT = new syntree(alphabet.ID, new synvalue(i)); :}
+			| STRING:n 									{: RESULT = new syntree(alphabet.ID, new synvalue(n)); :}
+			; 
+
+number		::= NUMBER:n 								{: RESULT = new syntree(alphabet.NUMBER, new synvalue(n)); :}
+			| REAL:n 									{: RESULT = new syntree(alphabet.REAL, new synvalue(n)); :}
+			; 

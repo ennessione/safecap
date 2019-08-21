@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="uk.ac.ncl.safecap.sim3.actions.Sim3Handler"
+            id="uk.ac.ncl.safecap.sim3.simulationCommand"
+            name="Simulate (sim3)">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:uk.ac.ncl.safecap.simToolbar">
+         <command
+               commandId="uk.ac.ncl.safecap.sim3.simulationCommand"
+               icon="icons/control_play_blue.png"
+               style="push"
+               tooltip="Sim3 (High-fidelity simulator)">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeEditorId">
+                  <equals
+                        value="safecap.diagram.part.SafecapDiagramEditorID">
+                  </equals>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+
+</plugin>
