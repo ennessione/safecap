@@ -1,6 +1,6 @@
-## Safecap
+# Safecap
 
-# Overview
+## Overview
 
 SafeCap is a modelling environment integrating a number of verification and simulation techniques. It assists railway engineers in designing track layouts and signalling principles for achieving optimal capacity utilisation, while ensuring system safety. 
 
@@ -8,6 +8,6 @@ SafeCap supports the microscopic analysis of a railway node (station, marshallin
 
 The SafeCap verification method is supported by a versatile toolkit for analysing railway system safety and capacity. The approach is based on the formulation of railway schema properties and operational principles using a rigorous mathematical notation. The main unique characteristic of the toolset is full formal verification of system safety (the push-button proof of safety) – this level of automated safety verification makes it superior to any approaches relying exclusively on simulation. Moreover it has potential to change the design practice as it makes it easier for the developers to explore and compare various designs always ensuring their safety.
 
-# Licence
+## Licence
 
 Eclipse Public License - v 1.0
