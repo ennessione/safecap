@@ -11,3 +11,8 @@ The SafeCap verification method is supported by a versatile toolkit for analysin
 ## Licence
 
 Eclipse Public License - v 1.0
+
+
+## Acknowledgements
+
+This work has been funded by a series of EPSRC/UK awards.
